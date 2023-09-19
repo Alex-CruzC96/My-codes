@@ -1,0 +1,16 @@
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\bin\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.exe
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\bin\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.deps.json
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\bin\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.runtimeconfig.json
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\bin\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.dll
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\bin\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.pdb
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\_3MLIDTS_AlejandroCruz_01.Form1.resources
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.csproj.GenerateResource.cache
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.AssemblyInfoInputs.cache
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.AssemblyInfo.cs
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.csproj.CoreCompileInputs.cache
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.dll
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\refint\3MLIDTS-AlejandroCruz-01.dll
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.pdb
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\3MLIDTS-AlejandroCruz-01.genruntimeconfig.cache
+C:\Users\alexc\source\repos\My-codes\3MLIDTS-AlejandroCruz-01\3MLIDTS-AlejandroCruz-01\obj\Debug\net6.0-windows\ref\3MLIDTS-AlejandroCruz-01.dll

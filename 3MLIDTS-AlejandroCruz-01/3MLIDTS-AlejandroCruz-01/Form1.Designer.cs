@@ -28,39 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            Action3 = new Button();
+            Action2 = new Button();
+            Action1 = new Button();
             input = new TextBox();
             textBox2 = new TextBox();
             SuspendLayout();
             // 
-            // button1
+            // Action3
             // 
-            button1.Location = new Point(349, 193);
-            button1.Name = "button1";
-            button1.Size = new Size(102, 29);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            Action3.Location = new Point(349, 193);
+            Action3.Name = "Action3";
+            Action3.Size = new Size(102, 29);
+            Action3.TabIndex = 0;
+            Action3.Text = "Clear";
+            Action3.UseVisualStyleBackColor = true;
+            Action3.Click += Action3_Click;
             // 
-            // button2
+            // Action2
             // 
-            button2.Location = new Point(349, 133);
-            button2.Name = "button2";
-            button2.Size = new Size(102, 29);
-            button2.TabIndex = 1;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
+            Action2.Location = new Point(349, 133);
+            Action2.Name = "Action2";
+            Action2.Size = new Size(102, 29);
+            Action2.TabIndex = 1;
+            Action2.Text = "<- C to F";
+            Action2.UseVisualStyleBackColor = true;
+            Action2.Click += Action2_Click;
             // 
-            // button3
+            // Action1
             // 
-            button3.Location = new Point(349, 76);
-            button3.Name = "button3";
-            button3.Size = new Size(102, 27);
-            button3.TabIndex = 2;
-            button3.Text = "button3";
-            button3.UseVisualStyleBackColor = true;
+            Action1.Location = new Point(349, 76);
+            Action1.Name = "Action1";
+            Action1.Size = new Size(102, 27);
+            Action1.TabIndex = 2;
+            Action1.Text = "F to C ->";
+            Action1.UseVisualStyleBackColor = true;
+            Action1.Click += Action1_Click;
             // 
             // input
             // 
@@ -84,9 +87,9 @@
             ClientSize = new Size(800, 450);
             Controls.Add(textBox2);
             Controls.Add(input);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(Action1);
+            Controls.Add(Action2);
+            Controls.Add(Action3);
             Name = "Form1";
             Text = "Forma 1";
             Load += Form1_Load;
@@ -96,9 +99,9 @@
 
         #endregion
 
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button Action3;
+        private Button Action2;
+        private Button Action1;
         private TextBox input;
         private TextBox textBox2;
     }

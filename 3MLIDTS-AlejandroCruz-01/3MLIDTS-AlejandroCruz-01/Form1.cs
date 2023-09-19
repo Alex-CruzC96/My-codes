@@ -16,5 +16,25 @@ namespace _3MLIDTS_AlejandroCruz_01
         {
 
         }
+
+        private void Action1_Click(object sender, EventArgs e)
+        {
+            float f = float.Parse(input.Text);
+            float c = (f - 32) * 5.0f / 9.0f;
+            textBox2.Text = c.ToString();
+        }
+
+        private void Action2_Click(object sender, EventArgs e)
+        {
+            float c = float.Parse(textBox2.Text);
+            float f = (c * 9f / 5f) + 32;
+            input.Text = f.ToString();
+        }
+
+        private void Action3_Click(object sender, EventArgs e)
+        {
+            input.Text = null;
+            textBox2.Text= null;
+        }
     }
 }

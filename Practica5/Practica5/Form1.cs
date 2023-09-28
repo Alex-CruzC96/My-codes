@@ -26,7 +26,7 @@ namespace Practica5
         {
 
         }
-        private void Write(String path)
+        private String Write(String path)
         {
             String name = InputOne.Text.ToString();
             String lastName = Input2.Text.ToString();
@@ -41,17 +41,8 @@ namespace Practica5
             {
                 gender = Mujer.Text.ToString();
             }
-            using (StreamWriter sw = new StreamWriter(path, true))
-            {
-                sw.WriteLine(name);
-                sw.WriteLine(lastName);
-                sw.WriteLine(phone);
-                sw.WriteLine(height);
-                sw.WriteLine(gender);
-                sw.WriteLine("\n");
-                sw.Close();
-            }
-
+            String datos = $"Nombres: {name}\r\nApellidos: {lastName}\r\nTelefono: {phone}\r\nEstatura: {height}cm\r\nGenero: {gender}";
+            return datos;
 
         }
         //trabajar con este método
@@ -61,9 +52,20 @@ namespace Practica5
             bool exist = File.Exists(path);
             if (!exist)
             {
-                File.Create(path);
+                File.WriteAllText(path,Write(path));
             }
-            Write(path);
+            else
+            {
+                using(StreamWriter writer=new StreamWriter(path))
+                {
+                    if(exist)
+                    {
+                        writer.WriteLine();
+                    }
+                    writer.WriteLine(Write(path));
+                    MessageBox.Show("Los datos han sido guardados con éxito!");
+                }
+            }
         }
 
         private void Cancelar_Click(object sender, EventArgs e)

@@ -11,7 +11,25 @@ def saveData():
         genre="Hombre"
     else:
         genre="Mujer"
-    
+    datos=f"Nombres: {names}\nApellidos: {lastNames}\nEdad: {age} años\nAltura: {height}\nTeléfono: {phone}\nGénero: {genre}"
+
+    with open("Datos.txt","a") as archivo:
+        archivo.write(datos+"\n\n")
+
+    input_Name.delete(0,tk.END)
+    input_LastName.delete(0,tk.END)
+    input_Age.delete(0,tk.END)
+    input_Height.delete(0,tk.END)
+    input_Phone.delete(0,tk.END)
+    var_Genre.set(0)
+
+def deleteInputs():
+    input_Name.delete(0,tk.END)
+    input_LastName.delete(0,tk.END)
+    input_Age.delete(0,tk.END)
+    input_Height.delete(0,tk.END)
+    input_Phone.delete(0,tk.END)
+    var_Genre.set(0)
 
 
 root=tk.Tk()
@@ -54,10 +72,10 @@ rb_Man.pack()
 rb_Women=tk.Radiobutton(root,text="Mujer",variable=var_Genre,value=2)
 rb_Women.pack(pady=(0,10))
 
-button_Save=tk.Button(root,text="Guardar",font=("Comic_Sans",12),width=14,background="#FACBEA",fg="#B0578D")
+button_Save=tk.Button(root,text="Guardar",font=("Comic_Sans",12),width=14,background="#FACBEA",fg="#B0578D",command=saveData)
 button_Save.pack(pady=(0,10))
 
-button_Delete=tk.Button(root,text="Borrar campos",font=("Comic_Sans",12),width=14,background="#FACBEA",fg="#B0578D")
+button_Delete=tk.Button(root,text="Borrar campos",font=("Comic_Sans",12),width=14,background="#FACBEA",fg="#B0578D",command=deleteInputs)
 button_Delete.pack(pady=(0,10))
 
 

@@ -1,0 +1,14 @@
+Nombres: Alejandro
+Apellidos: Cruz Cruz
+Edad: 19 años
+Altura: 1.65
+Teléfono: 9611100154
+Género: Hombre
+
+Nombres: Anael Guadalupe
+Apellidos: Del Carpio Zenteno
+Edad: 18 años
+Altura: 1.60
+Teléfono: 9612833995
+Género: Mujer
+

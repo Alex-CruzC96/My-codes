@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 def saveData():
     names=input_Name.get()
@@ -9,12 +10,14 @@ def saveData():
     genre=""
     if var_Genre.get()==1:
         genre="Hombre"
-    else:
+    elif var_Genre.get()==2:
         genre="Mujer"
     datos=f"Nombres: {names}\nApellidos: {lastNames}\nEdad: {age} años\nAltura: {height}\nTeléfono: {phone}\nGénero: {genre}"
 
     with open("Datos.txt","a") as archivo:
         archivo.write(datos+"\n\n")
+
+    messagebox.showinfo("Los datos han sido guardados con éxito!\n\n"+datos)
 
     input_Name.delete(0,tk.END)
     input_LastName.delete(0,tk.END)

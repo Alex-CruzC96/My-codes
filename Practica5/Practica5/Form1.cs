@@ -15,8 +15,14 @@ namespace Practica5
         public Form1()
         {
             InitializeComponent();
+            InputOne.TextChanged += textChanged;
+            
         }
 
+        private void textChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hola mundo!");
+        }
         private void label1_Click(object sender, EventArgs e)
         {
 

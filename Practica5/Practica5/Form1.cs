@@ -73,12 +73,14 @@ namespace Practica5
         {
 
         }
-        private String Write(String path)
+        
+        //trabajar con este método
+        private void Guardar_Click(object sender, EventArgs e)
         {
-            String name = InputOne.Text.ToString();
-            String lastName = Input2.Text.ToString();
-            String phone = Input3.Text.ToString();
-            float height = float.Parse(Input4.Text);
+            String name = InputOne.Text;
+            String lastName = Input2.Text;
+            String phone = Input3.Text;
+            String height = Input4.Text;
             String gender = "";
             if (Hombre.Checked)
             {
@@ -88,30 +90,32 @@ namespace Practica5
             {
                 gender = Mujer.Text.ToString();
             }
-            String datos = $"Nombres: {name}\r\nApellidos: {lastName}\r\nTelefono: {phone}\r\nEstatura: {height}cm\r\nGenero: {gender}";
-            return datos;
 
-        }
-        //trabajar con este método
-        private void Guardar_Click(object sender, EventArgs e)
-        {
-            String path = @"C:/Users/alexc/Desktop/Formularios/formulario.txt";
-            bool exist = File.Exists(path);
-            if (!exist)
-            {
-                File.WriteAllText(path,Write(path));
+            String datos = $"Nombres: {name}\r\nApellidos: {lastName}\r\nTelefono: {phone}\r\nEstatura: {height}cm\r\nGenero: {gender}";
+            if (validar.longValido(phone)&&validar.decimalValido(height)&&validar.stringValido(name)&&validar.stringValido(lastName)) {
+                String path = @"C:/Users/alexc/Desktop/Formularios/formulario.txt";
+                bool exist = File.Exists(path);
+                if (!exist)
+                {
+                    File.WriteAllText(path, datos);
+                }
+                else
+                {
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        if (exist)
+                        {
+                            writer.WriteLine();
+                        }
+                        writer.WriteLine(datos);
+                        MessageBox.Show("Los datos han sido guardados con éxito!");
+                    }
+                }
             }
             else
             {
-                using(StreamWriter writer=new StreamWriter(path))
-                {
-                    if(exist)
-                    {
-                        writer.WriteLine();
-                    }
-                    writer.WriteLine(Write(path));
-                    MessageBox.Show("Los datos han sido guardados con éxito!");
-                }
+                MessageBox.Show("Por favor, ingrese un datos correctos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       
             }
         }
 

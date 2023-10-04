@@ -28,7 +28,7 @@ namespace Practica5
             if (!validar.stringValido(textBox.Text))
             {
                 MessageBox.Show("Por favor, ingrese un nombre válido, no utilice carácteres especiales", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBox.Clear();
+                //textBox.Clear();
             }
         }
         private void validarEstatura(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace Practica5
             if (!validar.decimalValido(textBox.Text))
             {
                 MessageBox.Show("Por favor, ingrese una estatura válida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBox.Clear();
+                //textBox.Clear();
             }
         }
         private void validarApellido(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace Practica5
             if (!validar.stringValido(textBox.Text))
             {
                 MessageBox.Show("Por favor, ingrese un apellido válido, no utilice carácteres especiales", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBox.Clear();
+                //textBox.Clear();
             }
         }
         private void validarTelefono(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace Practica5
                 if (!validar.longValido(input))
                 {
                     MessageBox.Show("Por favor, ingrese un número válido de 10 dígitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    textBox.Clear();
+                    //textBox.Clear();
                 }
             }
          
@@ -114,7 +114,7 @@ namespace Practica5
             }
             else
             {
-                MessageBox.Show("Por favor, ingrese un datos correctos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, ingrese datos correctos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
        
             }
         }

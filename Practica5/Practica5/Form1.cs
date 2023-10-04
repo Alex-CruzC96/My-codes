@@ -12,17 +12,62 @@ namespace Practica5
 {
     public partial class Form1 : Form
     {
+        Validar validar=new Validar();
         public Form1()
         {
             InitializeComponent();
-            InputOne.TextChanged += textChanged;
-            
+            InputOne.TextChanged += validarNombre;
+            Input2.TextChanged += validarApellido;
+            Input3.TextChanged += validarTelefono;
+            Input4.TextChanged += validarEstatura;
         }
 
-        private void textChanged(object sender, EventArgs e)
+        private void validarNombre(object sender, EventArgs e)
         {
-            MessageBox.Show("Hola mundo!");
+            TextBox textBox=(TextBox)sender;
+            if (!validar.stringValido(textBox.Text))
+            {
+                MessageBox.Show("Por favor, ingrese un nombre válido, no utilice carácteres especiales", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox.Clear();
+            }
         }
+        private void validarEstatura(object sender, EventArgs e)
+        {
+            TextBox textBox=(TextBox)sender;
+            if (!validar.decimalValido(textBox.Text))
+            {
+                MessageBox.Show("Por favor, ingrese una estatura válida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox.Clear();
+            }
+        }
+        private void validarApellido(object sender, EventArgs e)
+        {
+            TextBox textBox=(TextBox)sender;
+            if (!validar.stringValido(textBox.Text))
+            {
+                MessageBox.Show("Por favor, ingrese un apellido válido, no utilice carácteres especiales", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox.Clear();
+            }
+        }
+        private void validarTelefono(object sender, EventArgs e)
+        {
+            TextBox textBox=(TextBox)sender;
+            string input=textBox.Text;
+            if(input.Length >= 10)
+            {
+                if (!validar.longValido(input))
+                {
+                    MessageBox.Show("Por favor, ingrese un número válido de 10 dígitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox.Clear();
+                }
+            }
+            //else if (!validar.longValido(input))
+            //{
+            //    MessageBox.Show("Por favor, ingrese un número válido de 10 dígitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    textBox.Clear();
+            //}
+        }
+
         private void label1_Click(object sender, EventArgs e)
         {
 

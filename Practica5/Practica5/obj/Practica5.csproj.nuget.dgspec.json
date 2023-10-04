@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alexc\\source\\repos\\My-codes\\Practica5\\Practica5\\Practica5.csproj": {}
+    "C:\\Users\\alexc\\source\\repos\\Alex-CruzC96\\My-codes\\Practica5\\Practica5\\Practica5.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alexc\\source\\repos\\My-codes\\Practica5\\Practica5\\Practica5.csproj": {
+    "C:\\Users\\alexc\\source\\repos\\Alex-CruzC96\\My-codes\\Practica5\\Practica5\\Practica5.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alexc\\source\\repos\\My-codes\\Practica5\\Practica5\\Practica5.csproj",
+        "projectUniqueName": "C:\\Users\\alexc\\source\\repos\\Alex-CruzC96\\My-codes\\Practica5\\Practica5\\Practica5.csproj",
         "projectName": "Practica5",
-        "projectPath": "C:\\Users\\alexc\\source\\repos\\My-codes\\Practica5\\Practica5\\Practica5.csproj",
+        "projectPath": "C:\\Users\\alexc\\source\\repos\\Alex-CruzC96\\My-codes\\Practica5\\Practica5\\Practica5.csproj",
         "packagesPath": "C:\\Users\\alexc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alexc\\source\\repos\\My-codes\\Practica5\\Practica5\\obj\\",
+        "outputPath": "C:\\Users\\alexc\\source\\repos\\Alex-CruzC96\\My-codes\\Practica5\\Practica5\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

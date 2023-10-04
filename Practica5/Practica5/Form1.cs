@@ -61,11 +61,7 @@ namespace Practica5
                     textBox.Clear();
                 }
             }
-            //else if (!validar.longValido(input))
-            //{
-            //    MessageBox.Show("Por favor, ingrese un número válido de 10 dígitos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    textBox.Clear();
-            //}
+         
         }
 
         private void label1_Click(object sender, EventArgs e)

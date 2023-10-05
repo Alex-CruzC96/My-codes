@@ -134,7 +134,7 @@ littleCats=[
 
     [
         [
-            [
+            [                
                 tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
                 tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
                 tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)

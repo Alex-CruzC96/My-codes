@@ -1,7 +1,7 @@
 import tkinter as tk
 
 root=tk.Tk()
-root.geometry("750x750")
+root.geometry("690x690")
 
 cat=[
     [
@@ -27,53 +27,53 @@ littleCats=[
     [
         [
             [
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][0],bg="#FFE4D6",width=75,height=75,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ],
         [
             [
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][1],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ],
         [
             [
-                tk.Frame(cat[0][2],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][2],bg="#FFE4D6",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][2],bg="#7C96AB",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[0][2],bg="#7C96AB",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][2],bg="#7C96AB",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][2],bg="#7C96AB",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[0][2],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][2],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[0][2],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[0][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ]
     ],
@@ -81,53 +81,53 @@ littleCats=[
     [
         [
             [
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2),
-                tk.Frame(cat[1][0],bg="lightblue",width=81,height=81,highlightbackground="purple",highlightthickness=2)
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ],
         [
             [
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ],
         [
             [
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[1][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[1][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ]
     ],
@@ -135,53 +135,53 @@ littleCats=[
     [
         [
             [
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][0],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][0],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ],
         [
             [
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][1],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][1],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ],
         [
             [
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ],
             [
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2),
-                tk.Frame(cat[2][2],bg="lightblue",width=81,height=81,highlightbackground="white",highlightthickness=2)
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2),
+                tk.Frame(cat[2][2],bg="#B7B7B7",width=75,height=75,highlightbackground="purple",highlightthickness=2)
             ]
         ]
     ]
@@ -201,6 +201,6 @@ for row in range(3):
 
 
 
-littleCats[1][1][1][1].config(bg="purple")
+#littleCats[1][1][1][1].config(bg="purple")
 
 root.mainloop()

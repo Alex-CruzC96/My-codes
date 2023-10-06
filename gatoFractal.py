@@ -362,6 +362,14 @@ for rowOne in range(3):
                 labels[rowOne][columnOne][row][column].place(x=19,y=10)
                 labels[rowOne][columnOne][row][column].config(text="O")
 
-labels[1][1][1][1].config(text="X")
+
+
+for row in range(3):
+    for column in range(3):
+        cat[row][column].grid(row=row,column=column)
+
+
+
+#littleCats[1][1][1][1].config(bg="purple")
 
 root.mainloop()

@@ -350,8 +350,9 @@ labels=[
     ]
 ]
 
-def changeColor(event,rowOne,columnOne,row,column):
+def principalEvent(event,rowOne,columnOne,row,column):
     event.config(bg="red")
+    #agregar condición para que coloque X u O cada vez que este evento sea accionado 
     labels[rowOne][columnOne][row][column].config(text="O",bg="red")
 
 
@@ -364,7 +365,7 @@ for rowOne in range(3):
         for row in range(3):
             for column in range(3):
                 littleCats[rowOne][columnOne][row][column].grid(row=row,column=column)
-                littleCats[rowOne][columnOne][row][column].bind("<Button-1>",lambda event,eve=littleCats[rowOne][columnOne][row][column],one=rowOne,two=columnOne,three=row,four=column:changeColor(eve,one,two,three,four))
+                littleCats[rowOne][columnOne][row][column].bind("<Button-1>",lambda event,eve=littleCats[rowOne][columnOne][row][column],one=rowOne,two=columnOne,three=row,four=column:principalEvent(eve,one,two,three,four))
                 labels[rowOne][columnOne][row][column].place(x=19,y=10)
 
 

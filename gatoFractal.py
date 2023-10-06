@@ -2,6 +2,7 @@ import tkinter as tk
 
 root=tk.Tk()
 root.geometry("690x690")
+root.title("Gato Fractal!")
 
 cat=[
     [
@@ -187,20 +188,180 @@ littleCats=[
     ]
 ]
 
-for rowOne in range(3):
-    for columnOne in range(3):
-        for row in range(3):
-            for column in range(3):
-                littleCats[rowOne][columnOne][row][column].grid(row=row,column=column)
-
-
+labels=[
+    [
+        [
+            [
+                tk.Label(littleCats[0][0][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][0][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][0][0][2],text="",font=("Arial",32),bg="#B7B7B7"),
+            ],
+            [
+                tk.Label(littleCats[0][0][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][0][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][0][1][2],text="",font=("Arial",32),bg="#B7B7B7"),
+            ],
+            [
+                tk.Label(littleCats[0][0][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][0][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][0][2][2],text="",font=("Arial",32),bg="#B7B7B7"), 
+            ]
+        ],
+        [
+            [
+                tk.Label(littleCats[0][1][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][1][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][1][0][2],text="",font=("Arial",32),bg="#B7B7B7"),
+            ],
+            [
+                tk.Label(littleCats[0][1][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][1][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][1][1][2],text="",font=("Arial",32),bg="#B7B7B7"),
+            ],
+            [
+                tk.Label(littleCats[0][1][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][1][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][1][2][2],text="",font=("Arial",32),bg="#B7B7B7"),
+            ]
+        ],
+        [
+            [
+                tk.Label(littleCats[0][2][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][2][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][2][0][2],text="",font=("Arial",32),bg="#B7B7B7"),
+            ],
+            [
+                tk.Label(littleCats[0][2][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][2][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][2][1][2],text="",font=("Arial",32),bg="#B7B7B7"),
+            ],
+            [
+                tk.Label(littleCats[0][2][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][2][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[0][2][2][2],text="",font=("Arial",32),bg="#B7B7B7"),
+            ]
+        ]
+    ],
+    [
+        [
+            [
+                tk.Label(littleCats[1][0][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][0][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][0][0][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[1][0][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][0][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][0][1][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[1][0][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][0][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][0][2][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ]
+        ],
+        [
+            [
+                tk.Label(littleCats[1][1][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][1][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][1][0][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[1][1][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][1][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][1][1][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[1][1][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][1][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][1][2][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ]
+        ],
+        [
+            [
+                tk.Label(littleCats[1][2][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][2][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][2][0][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[1][2][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][2][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][2][1][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[1][2][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][2][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[1][2][2][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ]
+        ]
+    ],
+    [
+        [
+            [
+                tk.Label(littleCats[2][0][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][0][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][0][0][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[2][0][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][0][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][0][1][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[2][0][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][0][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][0][2][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ]
+        ],
+        [
+            [
+                tk.Label(littleCats[2][1][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][1][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][1][0][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[2][1][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][1][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][1][1][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[2][1][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][1][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][1][2][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ]
+        ],
+        [
+            [
+                tk.Label(littleCats[2][2][0][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][2][0][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][2][0][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[2][2][1][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][2][1][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][2][1][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ],
+            [
+                tk.Label(littleCats[2][2][2][0],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][2][2][1],text="",font=("Arial",32),bg="#B7B7B7"),
+                tk.Label(littleCats[2][2][2][2],text="",font=("Arial",32),bg="#B7B7B7")
+            ]
+        ]
+    ]
+]
 
 for row in range(3):
     for column in range(3):
         cat[row][column].grid(row=row,column=column)
 
+for rowOne in range(3):
+    for columnOne in range(3):
+        for row in range(3):
+            for column in range(3):
+                littleCats[rowOne][columnOne][row][column].grid(row=row,column=column)
+                labels[rowOne][columnOne][row][column].place(x=19,y=10)
+                labels[rowOne][columnOne][row][column].config(text="O")
 
-
-#littleCats[1][1][1][1].config(bg="purple")
+labels[1][1][1][1].config(text="X")
 
 root.mainloop()

@@ -199,15 +199,28 @@ for row in range(3):
     for column in range(3):
         cat[row][column].grid(row=row,column=column)
 
-def cambiar_color(event):     
-    
-    event.config(bg="red")    
+color_actual = '#B7B7B7'
+def cambiar_color(event):                   
+    global color_actual
+    if color_actual == '#B7B7B7':
+        event.config(bg='red')    
+        event.config(state='disabled')
+        color_actual = 'red'
+        
+        
+    else:
+        event.config(bg='#B7B7B7')
+        color_actual = '#B7B7B7'
+         
 
 for rowOne in range(3):
     for columnOne in range(3):
         for row in range(3):
             for column in range(3):
-                littleCats[rowOne][columnOne][row][column].bind("<Button-1>",lambda event,eve=littleCats[rowOne][columnOne][row][column]:cambiar_color(eve))
+                littleCats[rowOne][columnOne][row][column].bind("<Button-1>",lambda event,eve=littleCats[rowOne][columnOne][row][column]:cambiar_color(eve))                
+                
+
+
 
 
 root.mainloop()

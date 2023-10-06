@@ -350,6 +350,10 @@ labels=[
     ]
 ]
 
+def changeColor(event):
+    event.config(bg="red")
+
+
 for row in range(3):
     for column in range(3):
         cat[row][column].grid(row=row,column=column)
@@ -359,7 +363,9 @@ for rowOne in range(3):
         for row in range(3):
             for column in range(3):
                 littleCats[rowOne][columnOne][row][column].grid(row=row,column=column)
+                littleCats[rowOne][columnOne][row][column].bind("<Button-1>",lambda event,eve=littleCats[rowOne][columnOne][row][column]:changeColor(eve))
                 labels[rowOne][columnOne][row][column].place(x=19,y=10)
-                labels[rowOne][columnOne][row][column].config(text="O")
+                labels[rowOne][columnOne][row][column].config(text="X")
+
 
 root.mainloop()

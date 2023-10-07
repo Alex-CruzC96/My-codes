@@ -12,3 +12,10 @@ Altura: 1.60
 Teléfono: 9612833995
 Género: Mujer
 
+Nombres: Alejandro
+Apellidos: Cruz Cruz
+Edad: 19 años
+Altura: 1.65
+Teléfono: 9611109153
+Género: Hombre
+

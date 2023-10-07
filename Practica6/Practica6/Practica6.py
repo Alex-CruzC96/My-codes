@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+import re
 
 def saveData():
     names=input_Name.get()
@@ -12,19 +13,23 @@ def saveData():
         genre="Hombre"
     elif var_Genre.get()==2:
         genre="Mujer"
-    datos=f"Nombres: {names}\nApellidos: {lastNames}\nEdad: {age} años\nAltura: {height}\nTeléfono: {phone}\nGénero: {genre}"
+    
+    if(validateInteger(age) and validateDecimal(height) and validateLength(phone) and validateString(names) and validateString(lastNames)):
+        datos=f"Nombres: {names}\nApellidos: {lastNames}\nEdad: {age} años\nAltura: {height}\nTeléfono: {phone}\nGénero: {genre}"
 
-    with open("Datos.txt","a") as archivo:
-        archivo.write(datos+"\n\n")
+        with open("Datos.txt","a") as archivo:
+            archivo.write(datos+"\n\n")
 
-    messagebox.showinfo("Los datos han sido guardados con éxito!\n\n"+datos)
+        messagebox.showinfo("Los datos han sido guardados con éxito!\n\n"+datos)
 
-    input_Name.delete(0,tk.END)
-    input_LastName.delete(0,tk.END)
-    input_Age.delete(0,tk.END)
-    input_Height.delete(0,tk.END)
-    input_Phone.delete(0,tk.END)
-    var_Genre.set(0)
+        input_Name.delete(0,tk.END)
+        input_LastName.delete(0,tk.END)
+        input_Age.delete(0,tk.END)
+        input_Height.delete(0,tk.END)
+        input_Phone.delete(0,tk.END)
+        var_Genre.set(0)
+    else:
+        messagebox.showerror("Error","Ingrese datos validos en los campos")
 
 def deleteInputs():
     input_Name.delete(0,tk.END)
@@ -34,6 +39,25 @@ def deleteInputs():
     input_Phone.delete(0,tk.END)
     var_Genre.set(0)
 
+def validateInteger(integer):
+    try:
+        int(integer)
+        return True
+    except ValueError:
+        return False
+
+def validateDecimal(decimal):
+    try:
+        float(decimal)
+        return True
+    except ValueError:
+        return False
+    
+def validateLength(value):
+    return value.isdigit() and len(value) == 10
+
+def validateString(text):
+    return bool(re.match("^[a-zA-Z\s]+$",text))
 
 root=tk.Tk()
 root.title("Formulario")

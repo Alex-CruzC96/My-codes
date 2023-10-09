@@ -350,10 +350,18 @@ labels=[
     ]
 ]
 
+
+xActiva = False 
 def principalEvent(event,rowOne,columnOne,row,column):
-    event.config(bg="red")
     #agregar condición para que coloque X u O cada vez que este evento sea accionado 
-    labels[rowOne][columnOne][row][column].config(text="O",bg="red")
+    global xActiva
+    if (xActiva!=True):
+        labels[rowOne][columnOne][row][column].config(text="X")      
+        xActiva=True  
+    else:
+        labels[rowOne][columnOne][row][column].config(text="O")
+        xActiva=False
+    
 
 
 for row in range(3):

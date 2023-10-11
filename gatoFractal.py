@@ -373,20 +373,49 @@ bigLabels=[
 xActiva = False 
 def principalEvent(event,rowOne,columnOne,row,column):
     global xActiva
-    if(labels[rowOne][columnOne][row][column].cget("text")=="" and cat[rowOne][columnOne].cget("bg")!="red"):
+    if(labels[rowOne][columnOne][row][column].cget("text")=="" and cat[rowOne][columnOne].cget("bg")!="red" and bigLabels[rowOne][columnOne].cget("text")==""):
         if (xActiva!=True):
             labels[rowOne][columnOne][row][column].config(text="X")      
             xActiva=True  
+            evaluate(rowOne,columnOne)
             blockingEvent(rowOne,columnOne,row,column)
         else:
             labels[rowOne][columnOne][row][column].config(text="O")
             xActiva=False
+            evaluate(rowOne,columnOne)
             blockingEvent(rowOne,columnOne,row,column)
     
+def evaluate(rowOne,columnOne):
+    combos=[
+        #Combinaciones ganadoras horizontales
+      [labels[rowOne][columnOne][0][0], labels[rowOne][columnOne][0][1], labels[rowOne][columnOne][0][2]],
+      [labels[rowOne][columnOne][1][0], labels[rowOne][columnOne][1][1], labels[rowOne][columnOne][1][2]],
+      [labels[rowOne][columnOne][2][0], labels[rowOne][columnOne][2][1], labels[rowOne][columnOne][2][2]],
+        #Combinaciones ganadoras verticales
+      [labels[rowOne][columnOne][0][0], labels[rowOne][columnOne][1][0], labels[rowOne][columnOne][2][0]],
+      [labels[rowOne][columnOne][0][1], labels[rowOne][columnOne][1][1], labels[rowOne][columnOne][2][1]],
+      [labels[rowOne][columnOne][0][2], labels[rowOne][columnOne][1][2], labels[rowOne][columnOne][2][2]],
+        #Combinaciones ganadoras diagonales
+      [labels[rowOne][columnOne][0][0], labels[rowOne][columnOne][1][1], labels[rowOne][columnOne][2][2]],
+      [labels[rowOne][columnOne][0][2], labels[rowOne][columnOne][1][1], labels[rowOne][columnOne][2][0]]
+    ]
+    for combo in combos:
+        a,b,c=combo
+        if(a.cget("text")=="X" and b.cget("text")=="X" and c.cget("text")=="X"):
+            messagebox.showinfo("Ganó X!","Felicidades, ganaste!")
+            bigLabels[rowOne][columnOne].config(text="X")
+            global xActiva
+            xActiva= not xActiva
+        if(a.cget("text")=="O" and b.cget("text")=="O" and c.cget("text")=="O"):
+            messagebox.showinfo("Ganó O!","Felicidades, ganaste!")
+            bigLabels[rowOne][columnOne].config(text="O")
+            xActiva= not xActiva
+        
+
 def blockingEvent(rowOne,columnOne,row,column):
     for rowOne in range(3):
         for columnOne in range(3):
-            if(cat[rowOne][columnOne]!=cat[row][column]):
+            if(cat[rowOne][columnOne]!=cat[row][column] and bigLabels[row][column].cget("text")==""):
                 cat[rowOne][columnOne].config(bg="red")
                 for r in range(3):
                     for c in range(3):

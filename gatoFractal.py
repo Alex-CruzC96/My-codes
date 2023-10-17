@@ -378,11 +378,14 @@ def principalEvent(event,rowOne,columnOne,row,column):
             labels[rowOne][columnOne][row][column].config(text="X")      
             xActiva=True  
             evaluate(rowOne,columnOne)
+            evaluate_bigLabels()
             blockingEvent(rowOne,columnOne,row,column)
         else:
             labels[rowOne][columnOne][row][column].config(text="O")
             xActiva=False
+            
             evaluate(rowOne,columnOne)
+            evaluate_bigLabels()
             blockingEvent(rowOne,columnOne,row,column)
     
 def evaluate(rowOne,columnOne):
@@ -411,6 +414,32 @@ def evaluate(rowOne,columnOne):
             bigLabels[rowOne][columnOne].config(text="O")
             xActiva= not xActiva
         
+
+def evaluate_bigLabels():
+    combos=[
+        #Combinaciones ganadoras horizontales
+      [bigLabels[0][0], bigLabels[0][1], bigLabels[0][2]],
+      [bigLabels[1][0], bigLabels[1][1], bigLabels[1][2]],
+      [bigLabels[2][0], bigLabels[2][1], bigLabels[2][2]],
+        #Combinaciones ganadoras verticales
+      [bigLabels[0][0], bigLabels[1][0], bigLabels[2][0]],
+      [bigLabels[0][1], bigLabels[1][1], bigLabels[2][1]],
+      [bigLabels[0][2], bigLabels[1][2], bigLabels[2][2]],
+        #Combinaciones ganadoras diagonales
+      [bigLabels[0][2], bigLabels[1][1], bigLabels[2][0]],
+      [bigLabels[0][0], bigLabels[1][1], bigLabels[2][2]]
+    ]
+    for combo in combos:
+        a,b,c=combo
+        if(a.cget("text")=="X" and b.cget("text")=="X" and c.cget("text")=="X"):
+            messagebox.showinfo("Ganó X!","Felicidades, ganaste la partida!")            
+            # global xActiva
+            # xActiva= not xActiva
+        if(a.cget("text")=="O" and b.cget("text")=="O" and c.cget("text")=="O"):
+            messagebox.showinfo("Ganó O!","Felicidades, ganaste la partida!")
+            #xActiva= not xActiva
+
+
 
 def blockingEvent(rowOne,columnOne,row,column):
     for rowOne in range(3):

@@ -1,0 +1,10 @@
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\bin\Debug\PracticaSERIAL.exe.config
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\bin\Debug\PracticaSERIAL.exe
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\bin\Debug\PracticaSERIAL.pdb
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\obj\Debug\PracticaSERIAL.csproj.AssemblyReference.cache
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\obj\Debug\PracticaSERIAL.Form1.resources
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\obj\Debug\PracticaSERIAL.Properties.Resources.resources
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\obj\Debug\PracticaSERIAL.csproj.GenerateResource.cache
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\obj\Debug\PracticaSERIAL.csproj.CoreCompileInputs.cache
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\obj\Debug\PracticaSERIAL.exe
+C:\Users\alexc\source\repos\Alex-CruzC96\My-codes\PracticaSERIAL\PracticaSERIAL\obj\Debug\PracticaSERIAL.pdb

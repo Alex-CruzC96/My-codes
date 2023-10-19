@@ -4,6 +4,8 @@ from tkinter import messagebox
 root=tk.Tk()
 root.geometry("690x690")
 root.title("Gato Fractal!")
+icon=tk.PhotoImage(file="iconoGato.png")
+root.iconphoto(root,icon)
 
 cat=[
     [
@@ -446,11 +448,38 @@ def evaluate_bigLabels():
         if(a.cget("text")=="X" and b.cget("text")=="X" and c.cget("text")=="X"):
             messagebox.showinfo("Ganó X!","Felicidades, ganaste la partida!")            
             win=True
+            resetWindow()
         if(a.cget("text")=="O" and b.cget("text")=="O" and c.cget("text")=="O"):
             messagebox.showinfo("Ganó O!","Felicidades, ganaste la partida!")
             win=True
+    resetWindow()
 
 
+def resetWindow():
+    global second_window
+    second_window=tk.Toplevel(root)
+    second_window.geometry("400x100")
+    second_window.title("El juego ha terminado")
+    second_window.iconphoto(second_window,icon)
+    text=tk.Label(second_window,text="¿Desea reiniciar?",font=("Comic_Sans",20))
+    text.pack()
+    buttonOne=tk.Button(second_window,text="Reiniciar",font=("Arial",12),justify='center',command=reset)
+    buttonOne.place(x=40,y=50)
+    buttonTwo=tk.Button(second_window,text="Salir",font=("Arial",12),justify='center',command=quit)
+    buttonTwo.place(x=300,y=50)
+
+def reset():
+    for rowOne in range(3):
+        for columnOne in range(3):
+            for row in range(3):
+                for column in range(3):
+                    littleCats[rowOne][columnOne][row][column].config(bg="#B7B7B7")
+                    labels[rowOne][columnOne][row][column].config(text="",bg="#B7B7B7",fg="black")
+                    bigLabels[row][column].config(text="",bg="#B7B7B7")
+                    cat[row][column].config(bg="purple")
+    global win 
+    win=False
+    second_window.destroy()
 
 def blockingEvent(rowOne,columnOne,row,column):
     for rowOne in range(3):
@@ -485,6 +514,8 @@ for rowOne in range(3):
                 littleCats[rowOne][columnOne][row][column].bind("<Button-1>",lambda eve=littleCats[rowOne][columnOne][row][column],one=rowOne,two=columnOne,three=row,four=column:principalEvent(eve,one,two,three,four))
                 labels[rowOne][columnOne][row][column].place(x=19,y=10)
 
+# segunda=tk.Toplevel(root)
+# segunda.geometry("400x100")
 
 
 root.mainloop()

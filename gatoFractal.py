@@ -452,7 +452,7 @@ def evaluate_bigLabels():
         if(a.cget("text")=="O" and b.cget("text")=="O" and c.cget("text")=="O"):
             messagebox.showinfo("Ganó O!","Felicidades, ganaste la partida!")
             win=True
-    resetWindow()
+            resetWindow()
 
 
 def resetWindow():

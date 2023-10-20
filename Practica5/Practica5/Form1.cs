@@ -7,12 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using MySql.Data.MySqlClient;
+using System.Runtime.CompilerServices;
 
 namespace Practica5
 {
     public partial class Form1 : Form
     {
         Validar validar=new Validar();
+        String conexion = "Server=localhost;Port=3308;Database=formulario;Uid=root;Pwd=10022004AlexCruz9669;";
+        int Id_Usuario = 1;
         public Form1()
         {
             InitializeComponent();
@@ -106,8 +110,11 @@ namespace Practica5
                         if (exist)
                         {
                             writer.WriteLine();
+                            insert(name, lastName, long.Parse(phone), decimal.Parse(height), gender);
+
                         }
                         writer.WriteLine(datos);
+                        insert(name, lastName, long.Parse(phone), decimal.Parse(height), gender);
                         MessageBox.Show("Los datos han sido guardados con éxito!");
                     }
                 }
@@ -125,6 +132,27 @@ namespace Practica5
             Input2.Text = string.Empty;
             Input3.Text = string.Empty;
             Input4.Text = string.Empty;
+        }
+        private void insert(String nombre,String apellido,long telefono,decimal estatura,String genero)
+        {
+            using(MySqlConnection conn = new MySqlConnection(conexion))
+            {
+                conn.Open();
+                String insert = "INSERT INTO Formulario (@Id_Usuario,@Nombre,@Apellidos,@Telefono,@Estatura,@Genero)" + 
+                    "VALUES(@Id_Usuario,@Nombre,@Apellidos,@Telefono,@Estatura,@Genero)";
+                using(MySqlCommand command=new MySqlCommand(insert, conn))
+                {
+                    command.Parameters.AddWithValue("@Id_Usuario",this.Id_Usuario);
+                    command.Parameters.AddWithValue("@Nombre", nombre);
+                    command.Parameters.AddWithValue("@Apellidos", apellido);
+                    command.Parameters.AddWithValue("@Telefono", telefono);
+                    command.Parameters.AddWithValue("@Estatura", estatura);
+                    command.Parameters.AddWithValue("@Genero", genero);
+                    command.ExecuteNonQuery();
+                }
+                conn.Close();
+                this.Id_Usuario += 1;
+            }
         }
     }
 }

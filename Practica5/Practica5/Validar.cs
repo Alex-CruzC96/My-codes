@@ -19,7 +19,7 @@ namespace Practica5
             decimal result;
             return decimal.TryParse(value, out result);
         }
-        public bool longValido(string value)
+        public bool longValido(String value)
         {
             long result;
             return long.TryParse(value, out result) && value.Length == 10;

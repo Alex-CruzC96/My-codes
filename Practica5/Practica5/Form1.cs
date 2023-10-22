@@ -7,12 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using MySql.Data.MySqlClient;
 
 namespace Practica5
 {
     public partial class Form1 : Form
     {
         Validar validar=new Validar();
+        String conexion = "Server=localhost;port=3306;Database=formulario;Uid=root;Pwd=;";
         public Form1()
         {
             InitializeComponent();
@@ -92,25 +94,10 @@ namespace Practica5
             }
 
             String datos = $"Nombres: {name}\r\nApellidos: {lastName}\r\nTelefono: {phone}\r\nEstatura: {height}cm\r\nGenero: {gender}";
-            if (validar.longValido(phone)&&validar.decimalValido(height)&&validar.stringValido(name)&&validar.stringValido(lastName)) {
-                String path = @"C:/Users/alexc/Desktop/Formularios/formulario.txt";
-                bool exist = File.Exists(path);
-                if (!exist)
-                {
-                    File.WriteAllText(path, datos);
-                }
-                else
-                {
-                    using (StreamWriter writer = new StreamWriter(path))
-                    {
-                        if (exist)
-                        {
-                            writer.WriteLine();
-                        }
-                        writer.WriteLine(datos);
-                        MessageBox.Show("Los datos han sido guardados con éxito!");
-                    }
-                }
+            if (validar.longValido(phone)&&validar.decimalValido(height)&&validar.stringValido(name)&&validar.stringValido(lastName)) 
+            {
+                conect(name, lastName, long.Parse(phone), float.Parse(height), gender);
+                MessageBox.Show("Los datos han sido guardados con éxito!");
             }
             else
             {
@@ -125,6 +112,25 @@ namespace Practica5
             Input2.Text = string.Empty;
             Input3.Text = string.Empty;
             Input4.Text = string.Empty;
+        }
+        private void conect(String nombre, String apellido, long telefono, float estatura, String genero)
+        {
+            using(MySqlConnection conn = new MySqlConnection(conexion))
+            {
+                conn.Open();
+                String insert = "INSERT INTO usuario (Nombre,Apellidos,Telefono,Estatura,Genero)" +
+                                "VALUES(@Nombre,@Apellidos,@Telefono,@Estatura,@Genero);";
+                using(MySqlCommand cmd=new MySqlCommand(insert, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Nombre", nombre);
+                    cmd.Parameters.AddWithValue("@Apellidos", apellido);
+                    cmd.Parameters.AddWithValue("@Telefono", telefono);
+                    cmd.Parameters.AddWithValue("@Estatura", estatura);
+                    cmd.Parameters.AddWithValue("@Genero", genero);
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
         }
     }
 }

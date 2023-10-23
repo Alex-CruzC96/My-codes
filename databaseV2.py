@@ -14,6 +14,15 @@ def reset(): #deja en blanco los inputs
         inputPrecio.delete(0,tk.END)
         inputCosto.delete(0,tk.END)
  
+def retornarId():
+    task.execute(f"SELECT Id_Producto FROM Producto WHERE Nom_producto = '{inputName.get()}' AND Modelo = '{inputModel.get()}' AND Color = '{inputColor.get()}'")
+    temp=task.fetchone()
+    if temp is not None:
+        id_Producto=temp[0]
+    else:
+        id_Producto=0
+    return id_Producto
+
 def evaluarSiExiste(): #evalua si el registro a ingresar ya existe
     try:
         task.execute(f"SELECT 1 FROM Producto WHERE Nom_Producto = '{inputName.get()}' AND Modelo = '{inputModel.get()}' AND Color = '{inputColor.get()}'")
@@ -23,27 +32,36 @@ def evaluarSiExiste(): #evalua si el registro a ingresar ya existe
         messagebox.showerror("Error","Ha ocurrido un error inesperado.")
     
 def evaluarSiExisteConMismaGraduacion():
-    task.execute(f"SELECT Id_Producto FROM Producto WHERE Nom_Producto = '{inputName.get()}' AND Modelo = '{inputModel.get()}' AND Color = '{inputColor.get()}'")
-    data=task.fetchone()[0]
-    #Me quedé aquí, evaluar si ya se agregó ese producto con esa graduacion!!!!!!!!
-    return True
+    booleano =False
+    id_Producto=retornarId()
+    try:
+        task.execute(f"SELECT 1 FROM Graduaciones WHERE Id_Producto = {id_Producto}")
+        temp=task.fetchone()
+        if temp is not None:
+            booleano=True
+    except:
+        pass
+    #Me quedé aquí, no puedo evaluar porque no me deja hacer dos inserciones en la tabla graduaciones!!!!!!!!
+    return booleano
 
 def definirGraduacion(): #funciona solo para los productos que poseen graduacion 
     def insertarGraduacion():#inserta los valores de las graduaciones, color de mica, etc.
         try:
-            if(evaluarSiExisteConMismaGraduacion()):
-                task.execute(f"INSERT INTO Graduaciones(Id_Producto,Graduacion,Color_mica,Tratamiento_mica) VALUES({id_Producto},'{inputGraduacion.get()}','{inputMica.get()}','{inputTratamiento.get()}')")
-                #task.commit() #confirma la inserción a la base de datos
+            if(evaluarSiExisteConMismaGraduacion()==False):        #error en las relaciones
+                task.execute(f"INSERT INTO Graduaciones(Id_Producto,Graduacion,Color_mica,Tratamiento_mica) VALUES({id_producto},'{inputGraduacion.get()}','{inputMica.get()}','{inputTratamiento.get()}')")
+                conexion.commit() #confirma la inserción a la base de datos
                 messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
                 extra.destroy()
+                reset()
             else:
-                messagebox.showwarning("Dato ya agregado","El producto ya esta relacionado con esa graduación")
+                messagebox.showwarning("Dato ya agregado","El producto ya está relacionado con una graduación") #se debe arreglar la relación de las tablas
         except ValueError:
             messagebox.showerror("Error","Ha ocurrido un error inesperado.")
 
-    task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")
-    task.execute(f"SELECT Id_Producto FROM Producto WHERE Nom_Producto = '{inputName.get()}' AND Modelo = '{inputModel.get()}' AND Color = '{inputColor.get()}' ")
-    id_Producto=task.fetchone()[0]
+    if(evaluarSiExiste()):
+        task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")
+        conexion.commit()
+    id_producto=retornarId()
 
     extra=tk.Toplevel(registro)
     extra.geometry("260x280")
@@ -67,20 +85,15 @@ def insertarRegistros(): #Inserta registros sencillos
     if(extra.get()==""): #si no posee ningún dato extra en el producto
         if(evaluarSiExiste()): #Evalua que el registro no exista si existe no tiene caso volver a agregarlo
             try:#intenta hacer la inserción
-                task.execute("ALTER TABLE Producto AUTO_INCREMENT=1")#borrar
                 task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")   
+                conexion.commit()
                 messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
                 reset()
-                task.execute("SELECT * FROM Producto")#borrar
-                datos=task.fetchall()
-                for data in datos:
-                    print(data)#hasta aqui se debe borrar
-
             except ValueError:#error de conexión o inserción por algún motivo
                     messagebox.showerror("Error","Ha ocurrido un error inesperado")#envia el mensaje de error
         else:
             messagebox.showinfo("Ya agregado","El registro ya existe.")
-    elif(extra.get()=="graduacion"):    #si necesita insertar datos de graduación entraría aquí
+    elif(extra.get()=="graduacion"):
         definirGraduacion()
     elif(extra.get()=="liquido"):       #si necesita insertar datos de soluciones entraría aquí
         print("liquido")

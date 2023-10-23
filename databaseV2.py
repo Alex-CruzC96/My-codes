@@ -4,23 +4,85 @@ from tkinter import scrolledtext
 from tkinter import messagebox
 import re
 
-def insertarRegistros():
+def reset(): #deja en blanco los inputs
+        inputModel.delete(0,tk.END)
+        inputName.delete(0,tk.END)
+        selection.set("Seleccionar")
+        inputMarca.delete(0,tk.END)
+        inputMaterial.delete(0,tk.END)
+        inputColor.delete(0,tk.END)
+        inputPrecio.delete(0,tk.END)
+        inputCosto.delete(0,tk.END)
+ 
+def evaluarSiExiste(): #evalua si el registro a ingresar ya existe
+    try:
+        task.execute(f"SELECT 1 FROM Producto WHERE Nom_Producto = '{inputName.get()}' AND Modelo = '{inputModel.get()}' AND Color = '{inputColor.get()}'")
+        data=task.fetchone()
+        return data is None
+    except ValueError:
+        messagebox.showerror("Error","Ha ocurrido un error inesperado.")
+    
+def evaluarSiExisteConMismaGraduacion():
+    task.execute(f"SELECT Id_Producto FROM Producto WHERE Nom_Producto = '{inputName.get()}' AND Modelo = '{inputModel.get()}' AND Color = '{inputColor.get()}'")
+    data=task.fetchone()[0]
+    #Me quedé aquí, evaluar si ya se agregó ese producto con esa graduacion!!!!!!!!
+    return True
+
+def definirGraduacion(): #funciona solo para los productos que poseen graduacion 
+    def insertarGraduacion():#inserta los valores de las graduaciones, color de mica, etc.
+        try:
+            if(evaluarSiExisteConMismaGraduacion()):
+                task.execute(f"INSERT INTO Graduaciones(Id_Producto,Graduacion,Color_mica,Tratamiento_mica) VALUES({id_Producto},'{inputGraduacion.get()}','{inputMica.get()}','{inputTratamiento.get()}')")
+                #task.commit() #confirma la inserción a la base de datos
+                messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
+                extra.destroy()
+            else:
+                messagebox.showwarning("Dato ya agregado","El producto ya esta relacionado con esa graduación")
+        except ValueError:
+            messagebox.showerror("Error","Ha ocurrido un error inesperado.")
+
+    task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")
+    task.execute(f"SELECT Id_Producto FROM Producto WHERE Nom_Producto = '{inputName.get()}' AND Modelo = '{inputModel.get()}' AND Color = '{inputColor.get()}' ")
+    id_Producto=task.fetchone()[0]
+
+    extra=tk.Toplevel(registro)
+    extra.geometry("260x280")
+    extra.title("Define la graduación")
+    graduacion=tk.Label(extra,text="Gruaduación",font=("Calibri",12))
+    graduacion.pack()
+    inputGraduacion=tk.Entry(extra,width=20,justify='center')
+    inputGraduacion.pack(pady=(5,20))
+    colorMica=tk.Label(extra,text="Colo de mica",font=("Calibri",12))
+    colorMica.pack()
+    inputMica=tk.Entry(extra,width=20,justify='center')
+    inputMica.pack(pady=(5,20))
+    tratamiento=tk.Label(extra,text="Tratamiento de mica",font=("Calibri",12))
+    tratamiento.pack()
+    inputTratamiento=tk.Entry(extra,width=20,justify='center')
+    inputTratamiento.pack(pady=(5,20))
+    guardar=tk.Button(extra,text="Guardar",width=10,font=("Calibri",12),command=insertarGraduacion)
+    guardar.pack()
+
+def insertarRegistros(): #Inserta registros sencillos
     if(extra.get()==""): #si no posee ningún dato extra en el producto
-        try:#intenta hacer la inserción
-            task.execute("ALTER TABLE Producto AUTO_INCREMENT=1")#borrar
-            task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")   
-            messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
+        if(evaluarSiExiste()): #Evalua que el registro no exista si existe no tiene caso volver a agregarlo
+            try:#intenta hacer la inserción
+                task.execute("ALTER TABLE Producto AUTO_INCREMENT=1")#borrar
+                task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")   
+                messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
+                reset()
+                task.execute("SELECT * FROM Producto")#borrar
+                datos=task.fetchall()
+                for data in datos:
+                    print(data)#hasta aqui se debe borrar
 
-            task.execute("SELECT * FROM Producto")#borrar
-            datos=task.fetchall()
-            for data in datos:
-                print(data)#hasta aqui se debe borrar
-
-        except ValueError:#error de conexión o inserción por algún motivo
-            messagebox.showerror("Error","Ha ocurrido un error inesperado")#envia el mensaje de error
-    elif(extra.get()=="graduacion"):
-        print("graduacion")
-    elif(extra.get()=="liquido"):
+            except ValueError:#error de conexión o inserción por algún motivo
+                    messagebox.showerror("Error","Ha ocurrido un error inesperado")#envia el mensaje de error
+        else:
+            messagebox.showinfo("Ya agregado","El registro ya existe.")
+    elif(extra.get()=="graduacion"):    #si necesita insertar datos de graduación entraría aquí
+        definirGraduacion()
+    elif(extra.get()=="liquido"):       #si necesita insertar datos de soluciones entraría aquí
         print("liquido")
 
 def evaluarRegistros(): #evalua las entradas de la ventana para producto
@@ -49,6 +111,7 @@ def evaluarRegistros(): #evalua las entradas de la ventana para producto
         messagebox.showerror("Entradas incorrectas","Por favor, ingrese datos correctos.")
 
 def ingresarRegistro(): #genera una ventana para ingresar datos en producto
+    global registro
     registro=tk.Toplevel(root)
     registro.geometry("550x330")
     registro.title("Agregar registro")
@@ -139,7 +202,7 @@ root=tk.Tk()
 root.title("Servicio de inventario")
 root.geometry("920x650")
 
-add=tk.Button(root,text="Agregar registro",command=ingresarRegistro)
+add=tk.Button(root,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
 add.pack()
 
 root.mainloop()

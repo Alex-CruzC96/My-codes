@@ -44,15 +44,35 @@ def evaluarSiExisteConMismaGraduacion():
     #Me quedé aquí, no puedo evaluar porque no me deja hacer dos inserciones en la tabla graduaciones!!!!!!!!
     return booleano
 
+def evaluarSolucionValue(): #pendiente
+    booleano=False
+    if(len(inputContenido.get()) < 15 and len(inputEmpleo.get()) < 45 and len(inputDetalles.get()) < 150):
+        booleano=True
+    return booleano
+
+def evaluarGraduacionValue():
+    booleano = False
+    try:
+        float(inputGraduacion.get())
+        if(len(inputMica.get()) < 45 and len(inputTratamiento.get()) < 45):
+            booleano=True
+    except:
+        pass
+    return booleano 
+        
+
 def definirGraduacion(): #funciona solo para los productos que poseen graduacion 
     def insertarGraduacion():#inserta los valores de las graduaciones, color de mica, etc.
         try:
-            if(evaluarSiExisteConMismaGraduacion()==False):        #error en las relaciones
-                task.execute(f"INSERT INTO Graduaciones(Id_Producto,Graduacion,Color_mica,Tratamiento_mica) VALUES({id_producto},'{inputGraduacion.get()}','{inputMica.get()}','{inputTratamiento.get()}')")
-                conexion.commit() #confirma la inserción a la base de datos
-                messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
-                extra.destroy()
-                reset()
+            if(evaluarSiExisteConMismaGraduacion()==False):
+                if(evaluarGraduacionValue()):
+                    task.execute(f"INSERT INTO Graduaciones(Id_Producto,Graduacion,Color_mica,Tratamiento_mica) VALUES({id_producto},'{inputGraduacion.get()}','{inputMica.get()}','{inputTratamiento.get()}')")
+                    conexion.commit() #confirma la inserción a la base de datos
+                    messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
+                    extra.destroy()
+                    reset()
+                else:
+                    messagebox.showwarning("Datos incorrectos","Ingrese datos correctos en los campos.")
             else:
                 messagebox.showwarning("Dato ya agregado","El producto ya está relacionado con una graduación") #se debe arreglar la relación de las tablas
         except ValueError:
@@ -68,18 +88,72 @@ def definirGraduacion(): #funciona solo para los productos que poseen graduacion
     extra.title("Define la graduación")
     graduacion=tk.Label(extra,text="Gruaduación",font=("Calibri",12))
     graduacion.pack()
+    global inputGraduacion
     inputGraduacion=tk.Entry(extra,width=20,justify='center')
     inputGraduacion.pack(pady=(5,20))
     colorMica=tk.Label(extra,text="Colo de mica",font=("Calibri",12))
     colorMica.pack()
+    global inputMica
     inputMica=tk.Entry(extra,width=20,justify='center')
     inputMica.pack(pady=(5,20))
     tratamiento=tk.Label(extra,text="Tratamiento de mica",font=("Calibri",12))
     tratamiento.pack()
+    global inputTratamiento
     inputTratamiento=tk.Entry(extra,width=20,justify='center')
     inputTratamiento.pack(pady=(5,20))
     guardar=tk.Button(extra,text="Guardar",width=10,font=("Calibri",12),command=insertarGraduacion)
     guardar.pack()
+
+def insertarSolucion():
+    def solucionMathEval():
+        booleano =False
+        id_Producto=retornarId()
+        try:
+            task.execute(f"SELECT 1 FROM Soluciones_aplicables WHERE Id_Producto = {id_Producto}")
+            temp=task.fetchone()
+            if temp is not None:
+                booleano=True
+        except:
+            pass
+        return booleano
+
+    if(evaluarSolucionValue()):
+        if(evaluarSiExiste()):
+            try:
+                task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")
+                conexion.commit()
+            except ValueError:
+                messagebox.showerror("Ha ocurrido un error inesperado")
+        if(solucionMathEval()==False):
+            task.execute(f"INSERT INTO Soluciones_aplicables(Id_Producto,Contenido_producto,Modo_empleo,Detalles) VALUES({retornarId()},'{inputContenido.get()}','{inputEmpleo.get()}','{inputDetalles.get()}')")
+            conexion.commit()
+            messagebox.showinfo("Inserción exitosa","Los datos se han insertado correctamente")
+        else:
+            messagebox.showerror("Error","El producto ya está asociado a un registro")
+    else:
+        messagebox.showerror("Error","Ingrese datos correctos en los campos")
+
+def definirSolucion(): #terminar
+    contenidoWindow=tk.Toplevel(registro)
+    contenidoWindow.geometry("260x280")
+    contenidoWindow.title("Ingresa el contenido del producto")
+    contenido=tk.Label(contenidoWindow,text="Cantidad de contenido",font=("Calibri",12))
+    contenido.pack()
+    global inputContenido
+    inputContenido=tk.Entry(contenidoWindow,width=20,justify='center')
+    inputContenido.pack(pady=(5,20))
+    modoEmpleo=tk.Label(contenidoWindow,text="Modo de empleo",font=("Calibri",12))
+    modoEmpleo.pack()
+    global inputEmpleo
+    inputEmpleo=tk.Entry(contenidoWindow,width=20,justify='center')
+    inputEmpleo.pack(pady=(5,20))
+    detalles=tk.Label(contenidoWindow,text="Detalles a mencionar",font=("Calibri",12))
+    detalles.pack()
+    global inputDetalles
+    inputDetalles=tk.Entry(contenidoWindow,width=100,justify='center')
+    inputDetalles.pack(pady=(5,20))
+    guardarContenido=tk.Button(contenidoWindow,text="Guardar",width=10,font=("Calibri",12),command=insertarSolucion)
+    guardarContenido.pack()
 
 def insertarRegistros(): #Inserta registros sencillos
     if(extra.get()==""): #si no posee ningún dato extra en el producto
@@ -96,7 +170,7 @@ def insertarRegistros(): #Inserta registros sencillos
     elif(extra.get()=="graduacion"):
         definirGraduacion()
     elif(extra.get()=="liquido"):       #si necesita insertar datos de soluciones entraría aquí
-        print("liquido")
+        definirSolucion()
 
 def evaluarRegistros(): #evalua las entradas de la ventana para producto
     flotante=False

@@ -150,7 +150,7 @@ def definirSolucion(): #terminar
     detalles=tk.Label(contenidoWindow,text="Detalles a mencionar",font=("Calibri",12))
     detalles.pack()
     global inputDetalles
-    inputDetalles=tk.Entry(contenidoWindow,width=100,justify='center')
+    inputDetalles=tk.Entry(contenidoWindow,width=40,justify='center')
     inputDetalles.pack(pady=(5,20))
     guardarContenido=tk.Button(contenidoWindow,text="Guardar",width=10,font=("Calibri",12),command=insertarSolucion)
     guardarContenido.pack()
@@ -280,6 +280,103 @@ def ingresarRegistro(): #genera una ventana para ingresar datos en producto
     send.place(x=230,y=260)
 
 
+#función para agregar proveedores
+def addSeller():
+    def resetValues():
+        nameInput.delete(0,tk.END)
+        nombreInput.delete(0,tk.END)
+        pInput.delete(0,tk.END)
+        mInput.delete(0,tk.END)
+        addresInput.delete(0,tk.END)
+        phoneInput.delete(0,tk.END)
+        mailInput.delete(0,tk.END)
+        webSiteInput.delete(0,tk.END)
+    def returnValues():
+        name=nameInput.get()
+        nombre=nombreInput.get()
+        paterno=pInput.get()
+        materno=mInput.get()
+        addres=addresInput.get()
+        phone=phoneInput.get()
+        mail=mailInput.get()
+        webSite=webSiteInput.get()
+        value(name,nombre,paterno,materno,addres,phone,mail,webSite)
+
+    def value(name,nombre,paterno,materno,addres,phone,mail,webSite):
+        if(len(name) <= 45 and name!="" and len(nombre) <= 45 and nombre!="" and len(paterno) <= 45 and paterno!="" and len(materno) <= 45 and len(addres) <= 100 and addres!="" and len(phone) == 10 and phone.isdigit() and len(mail) <= 70 and mail!="" and len(webSite) <= 200):
+            try:
+                task.execute(f"SELECT 1 FROM Proveedor WHERE Nombre_proveedor = '{name}' AND Sitio_web = '{webSite}'")
+                temp=task.fetchone()
+                if temp is not None:
+                    result=True
+                else:
+                    result=False
+            except ValueError:
+                messagebox.showerror("Error","Ha ocurrido un error inesperado.")
+            if(result==False):
+                insertProveedor(name,nombre,paterno,materno,addres,phone,mail,webSite)
+            else:
+                messagebox.showwarning("Dato ya ingresado","El registro ya existe.")
+        else:
+            messagebox.showwarning("Datos incorrectos","Por favor, ingrese datos correctos en los campos")
+
+    def insertProveedor(name,nombre,paterno,materno,addres,phone,mail,webSite):
+        try:
+            task.execute(f"INSERT INTO Proveedor(Nombre_proveedor,Nombre_representante,Paterno_representante,Materno_representante,Direccion,Telefono,Correo,Sitio_web) VALUES('{name}','{nombre}','{paterno}','{materno}','{addres}','{phone}','{mail}','{webSite}')")
+            conexion.commit()
+            messagebox.showinfo("Datos insertado con éxito!","Los datos han sido guardados exitosamente.")
+            resetValues()
+        except ValueError:
+            messagebox.showerror("Error","Ha ocurrido un error inesperado.")
+
+    seller=tk.Toplevel(root)
+    seller.geometry("580x330")
+    seller.title("Agregar proveedor")
+    #me quedé aquí!!!!
+    name=tk.Label(seller,text="Nombre del proveedor",font=("Calibri",12))
+    name.grid(row=0,column=0,sticky='w',padx=(5,50),pady=4)
+    nameInput=tk.Entry(seller,width=50,justify='left')
+    nameInput.grid(row=0,column=1)
+
+    nombre=tk.Label(seller,text="Nombre del representante",font=("Calibri",12))
+    nombre.grid(row=1,column=0,sticky='w',padx=(5,50),pady=4)
+    nombreInput=tk.Entry(seller,width=50,justify='left')
+    nombreInput.grid(row=1,column=1)
+
+    apellidoP=tk.Label(seller,text="Apellido paterno del representante",font=("Calibri",12))
+    apellidoP.grid(row=2,column=0,sticky='w',padx=(5,20),pady=4)
+    pInput=tk.Entry(seller,width=50,justify='left')
+    pInput.grid(row=2,column=1)
+
+    apellidoM=tk.Label(seller,text="Apellido materno del representante",font=("Calibri",12))
+    apellidoM.grid(row=3,column=0,sticky='w',padx=(5,20),pady=4)
+    mInput=tk.Entry(seller,width=50,justify='left')
+    mInput.grid(row=3,column=1)
+
+    addres=tk.Label(seller,text="Dirección",font=("Calibri",12))
+    addres.grid(row=4,column=0,sticky='w',padx=(5,20),pady=4)
+    addresInput=tk.Entry(seller,width=50,justify='left')
+    addresInput.grid(row=4,column=1)
+
+    phone=tk.Label(seller,text="Teléfono de contacto",font=("Calibri",12))
+    phone.grid(row=5,column=0,sticky='w',padx=(5,20),pady=4)
+    phoneInput=tk.Entry(seller,width=50,justify='left')
+    phoneInput.grid(row=5,column=1)
+
+    mail=tk.Label(seller,text="Correo de contacto",font=("Calibri",12))
+    mail.grid(row=6,column=0,sticky='w',padx=(5,20),pady=4)
+    mailInput=tk.Entry(seller,width=50,justify='left')
+    mailInput.grid(row=6,column=1)
+
+    webSite=tk.Label(seller,text="Sitio web de contacto",font=("Calibri",12))
+    webSite.grid(row=7,column=0,sticky='w',padx=(5,20),pady=4)
+    webSiteInput=tk.Entry(seller,width=50,justify='left')
+    webSiteInput.grid(row=7,column=1)
+
+    save=tk.Button(seller,text="Guardar",font=("Arial",12),width=10,command=returnValues)
+    save.place(x=260,y=280)
+
+
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")
 task=conexion.cursor()
@@ -291,5 +388,8 @@ root.geometry("920x650")
 
 add=tk.Button(root,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
 add.pack()
+
+addProveedor=tk.Button(root,text="Agregar proveedor",command=addSeller)
+addProveedor.pack(pady=40)
 
 root.mainloop()

@@ -435,7 +435,11 @@ root.config(bg="#D9E2F3")
 #Cabezal
 head=tk.Frame(root,width=830,height=100,bg="#4472C4")
 head.pack(pady=20)
-
+image = PIL.Image.open("lentes.png")
+image=image.resize((150,150))
+muestra=tk.PhotoImage(data=image.tobytes())
+imagen=tk.Label(head,image=muestra)
+imagen.pack()
 
 add=tk.Button(root,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
 add.pack()

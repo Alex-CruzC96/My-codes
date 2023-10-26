@@ -2,6 +2,7 @@ import mysql.connector as my
 import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import messagebox
+import PIL.Image
 import re
 
 def reset(): #deja en blanco los inputs
@@ -177,6 +178,7 @@ def evaluarRegistros(): #evalua las entradas de la ventana para producto
     try:
         float(inputPrecio.get())
         float(inputCosto.get())
+        int(stockInput.get()) ### Me quedé aquí ### 
         flotante=True
     except ValueError:
         pass
@@ -200,7 +202,7 @@ def evaluarRegistros(): #evalua las entradas de la ventana para producto
 def ingresarRegistro(): #genera una ventana para ingresar datos en producto
     global registro
     registro=tk.Toplevel(root)
-    registro.geometry("550x330")
+    registro.geometry("680x460")
     registro.title("Agregar registro")
     #Modelo
     labelModel=tk.Label(registro,text="Modelo",font=("Calibri,14"),padx=20)
@@ -217,18 +219,25 @@ def ingresarRegistro(): #genera una ventana para ingresar datos en producto
     inputName.grid(row=1,column=1)
 
     #categoría
-    task.execute("SELECT * FROM Categoría")
-    opciones=task.fetchall()
     options=[]
-    for op in opciones:
-        options.append(op[1])
+    try:
+        task.execute("SELECT * FROM Categoría")
+        temp1=task.fetchall()
+        for op in temp1:
+            options.append(op[1])
+    except ValueError:
+        pass
     global selection
     selection=tk.StringVar()
     selection.set("Seleccionar")
+    if(len(options) != 0):
+        menuCategory=tk.OptionMenu(registro,selection,*options) #modificar
+        menuCategory.grid(row=2,column=1,sticky='w',padx=10)
+    else:
+        menuCategory=tk.OptionMenu(registro,selection,"") #modificar
+        menuCategory.grid(row=2,column=1,sticky='w',padx=10)
     labelCategory=tk.Label(registro,text="Categoría",font=("Calibri",14),padx=20)
     labelCategory.grid(row=2,column=0,sticky='w')
-    menuCategory=tk.OptionMenu(registro,selection,*options) #modificar
-    menuCategory.grid(row=2,column=1,sticky='w',padx=10)
 
     #Marca 
     marcaLabel=tk.Label(registro,text="Marca del producto",font=("Calibri",14),padx=20)
@@ -239,7 +248,7 @@ def ingresarRegistro(): #genera una ventana para ingresar datos en producto
 
     #material
     materialLabel=tk.Label(registro,text="Material de fabricación",font=("Calibri",14),padx=20)
-    materialLabel.grid(row=4,column=0)
+    materialLabel.grid(row=4,column=0,sticky='w')
     global inputMaterial
     inputMaterial=tk.Entry(registro,width=50,justify='left')
     inputMaterial.grid(row=4,column=1)
@@ -270,14 +279,50 @@ def ingresarRegistro(): #genera una ventana para ingresar datos en producto
     extra=tk.StringVar()
     extra.set("")
     option0=tk.Radiobutton(registro,text="Ninguno",variable=extra,value="")
-    option0.place(x=20,y=230)
+    option0.place(x=20,y=330)
     option1=tk.Radiobutton(registro,text="Posee graduación",variable=extra,value="graduacion")
-    option1.place(x=180,y=230)
+    option1.place(x=180,y=330)
     option2=tk.Radiobutton(registro,text="Posee líquido",variable=extra,value="liquido")
-    option2.place(x=360,y=230)
+    option2.place(x=360,y=330)
+
+    #Agregar a inventario
+    opciones=[]
+    global selection2
+    selection2=tk.StringVar()
+    selection2.set("Seleccionar")
+    proveedor=tk.Label(registro,text="Proveedor del producto",font=("Calibri",14),padx=20)
+    proveedor.grid(row=8,column=0,sticky='w')
+    try:
+        task.execute("SELECT * FROM Proveedor")
+        temp=task.fetchall()
+        for op2 in temp:
+            opciones.append(op2[1])
+    except:
+        pass
+    if(len(opciones)!=0):
+        menuProveedor=tk.OptionMenu(registro,selection2,*opciones) #modificar
+        menuProveedor.grid(row=8,column=1,sticky='w',padx=10)
+    else:
+        menuProveedor=tk.OptionMenu(registro,selection2,"") #modificar
+        menuProveedor.grid(row=8,column=1,sticky='w',padx=10)
+
+    #stock
+    global stockInput
+    stock=tk.Label(registro,text="Cantidad de stock disponible",font=("Calibri",14),padx=20)
+    stock.grid(row=9,column=0,sticky='w')
+    stockInput=tk.Entry(registro,width=50,justify='left')
+    stockInput.grid(row=9,column=1)
+
+    #fecha de adquisición
+    global dateInput
+    date=tk.Label(registro,text="Fecha en la que se adquirió el producto",font=("Calibri",14),padx=20)
+    date.grid(row=10,column=0,sticky='w')
+    dateInput=tk.Entry(registro,width=50,justify='left')
+    dateInput.grid(row=10,column=1)
+
     #Enviar
     send=tk.Button(registro,text="Guardar",width=10,font=("Calibri",14),command=evaluarRegistros)
-    send.place(x=230,y=260)
+    send.place(x=230,y=360)
 
 
 #función para agregar proveedores
@@ -385,6 +430,12 @@ task=conexion.cursor()
 root=tk.Tk()
 root.title("Servicio de inventario")
 root.geometry("920x650")
+root.config(bg="#D9E2F3")
+
+#Cabezal
+head=tk.Frame(root,width=830,height=100,bg="#4472C4")
+head.pack(pady=20)
+
 
 add=tk.Button(root,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
 add.pack()

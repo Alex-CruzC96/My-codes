@@ -2,7 +2,6 @@ import mysql.connector as my
 import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import messagebox
-import PIL.Image
 import re
 
 def reset(): #deja en blanco los inputs
@@ -23,6 +22,24 @@ def retornarId():
     else:
         id_Producto=0
     return id_Producto
+
+def retornarIdCategoria():
+    task.execute(f"SELECT Id_Categoria FROM Categoría WHERE Nombre_Categoria = '{selection.get()}'")
+    temp=task.fetchone()
+    if temp is not None:
+        id_Categoria=temp[0]
+    else:
+        id_Categoria=0
+    return id_Categoria
+
+def retornarIdProveedor():
+    task.execute(f"SELECT Id_Proveedor FROM Proveedor WHERE Nombre_proveedor = '{selection2.get()}'")
+    temp=task.fetchone()
+    if temp is not None:
+        id_Proveedor=temp[0]
+    else:
+        id_Proveedor=0
+    return id_Proveedor
 
 def evaluarSiExiste(): #evalua si el registro a ingresar ya existe
     try:
@@ -82,6 +99,8 @@ def definirGraduacion(): #funciona solo para los productos que poseen graduacion
     if(evaluarSiExiste()):
         task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")
         conexion.commit()
+        task.execute(f"INSERT INTO Inventario(Id_Producto,Id_Proveedor,Stock_Producto,Fecha_Adquisicion) VALUES('{retornarId()}','{retornarIdProveedor()}','{stockInput.get()}','{dateInput.get()}')")
+        conexion.commit()
     id_producto=retornarId()
 
     extra=tk.Toplevel(registro)
@@ -123,6 +142,8 @@ def insertarSolucion():
             try:
                 task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")
                 conexion.commit()
+                task.execute(f"INSERT INTO Inventario(Id_Producto,Id_Proveedor,Stock_Producto,Fecha_Adquisicion) VALUES('{retornarId()}','{retornarIdProveedor()}','{stockInput.get()}','{dateInput.get()}')")
+                conexion.commit()
             except ValueError:
                 messagebox.showerror("Ha ocurrido un error inesperado")
         if(solucionMathEval()==False):
@@ -160,7 +181,9 @@ def insertarRegistros(): #Inserta registros sencillos
     if(extra.get()==""): #si no posee ningún dato extra en el producto
         if(evaluarSiExiste()): #Evalua que el registro no exista si existe no tiene caso volver a agregarlo
             try:#intenta hacer la inserción
-                task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")   
+                task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{retornarIdCategoria()},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")   
+                conexion.commit()
+                task.execute(f"INSERT INTO Inventario(Id_Producto,Id_Proveedor,Stock_Producto,Fecha_Adquisicion) VALUES('{retornarId()}','{retornarIdProveedor()}','{stockInput.get()}','{dateInput.get()}')")
                 conexion.commit()
                 messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
                 reset()
@@ -189,12 +212,19 @@ def evaluarRegistros(): #evalua las entradas de la ventana para producto
     else:
         global id_Categoria
         id_Categoria=result[0]
+    task.execute(f"SELECT Id_Proveedor FROM Proveedor WHERE Nombre_proveedor = '{selection2.get()}'")
+    result2=task.fetchone()
+    if result2 is None:
+        flotante=False
+    else:
+        flotante=True
     evaluateModel=(len(inputModel.get())<=45)
     evaluateName=(len(inputName.get())<=45)
     evaluateMarca=(re.match("^[a-zA-Z\s]+$",inputMarca.get()) and len(inputMarca.get())<=20)
     evaluateMaterial=(re.match("^[a-zA-Z\s]+$",inputMaterial.get()) and len(inputMaterial.get())<=10)
     evaluateColor=(re.match("^[a-zA-Z\s]+$",inputColor.get()) and len(inputColor.get())<=20)
-    if(evaluateModel and evaluateName and evaluateMarca and evaluateMaterial and evaluateColor and flotante):
+    evaluarFecha=True if ("/" in dateInput.get() or "-" in dateInput.get() and re.match(r"^([0-9]{4})(-|/)([0-9]{1,2})(-|/)([0-9]{1,2})$",dateInput.get()) is not None) else False
+    if(evaluateModel and evaluateName and evaluateMarca and evaluateMaterial and evaluateColor and flotante and evaluarFecha):
         insertarRegistros()
     else:
         messagebox.showerror("Entradas incorrectas","Por favor, ingrese datos correctos.")
@@ -318,6 +348,7 @@ def ingresarRegistro(): #genera una ventana para ingresar datos en producto
     date=tk.Label(registro,text="Fecha en la que se adquirió el producto",font=("Calibri",14),padx=20)
     date.grid(row=10,column=0,sticky='w')
     dateInput=tk.Entry(registro,width=50,justify='left')
+    dateInput.insert(0,"yyyy/mm/dd")
     dateInput.grid(row=10,column=1)
 
     #Enviar
@@ -435,11 +466,9 @@ root.config(bg="#D9E2F3")
 #Cabezal
 head=tk.Frame(root,width=830,height=100,bg="#4472C4")
 head.pack(pady=20)
-image = PIL.Image.open("lentes.png")
-image=image.resize((150,150))
-muestra=tk.PhotoImage(data=image.tobytes())
-imagen=tk.Label(head,image=muestra)
-imagen.pack()
+head.propagate(False)
+titular=tk.Label(head,text="OPTILENT",font=("Times",44),bg="#4472C4")
+titular.pack()
 
 add=tk.Button(root,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
 add.pack()

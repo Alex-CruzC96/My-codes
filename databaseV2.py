@@ -1,6 +1,7 @@
 import mysql.connector as my
 import tkinter as tk
 from tkinter import scrolledtext
+from tkinter import ttk
 from tkinter import messagebox
 import re
 from PIL import Image,ImageTk
@@ -14,6 +15,8 @@ def reset(): #deja en blanco los inputs
         inputColor.delete(0,tk.END)
         inputPrecio.delete(0,tk.END)
         inputCosto.delete(0,tk.END)
+        dateInput.delete(0,tk.END)
+        stockInput.delete(0,tk.END)
  
 def retornarId():
     task.execute(f"SELECT Id_Producto FROM Producto WHERE Nom_producto = '{inputName.get()}' AND Modelo = '{inputModel.get()}' AND Color = '{inputColor.get()}'")
@@ -456,6 +459,44 @@ def addSeller():
 def guardarEvento(evento):
     messagebox.showinfo("Funciona","El evento funcionó!")
 
+def visualizarInv(): #Por el momento queda así  
+    visualizacion=tk.Toplevel(root)
+    visualizacion.geometry("950x400")
+    visualizacion.config(bg="#D9E2F3")
+    visualizacion.title("Productos en inventario")
+    producto=ttk.Treeview(visualizacion,columns=('Id_Producto','Modelo','Nom_Producto','Categoría','Marca','Material','Color','Precio_De_Venta','Costo_De_Adquisición'),show='headings')
+    producto.place(x=24,y=20,width=890,height=350)
+    producto.heading('Id_Producto',text='Id_Producto')
+    producto.heading('Modelo',text='Modelo')
+    producto.heading('Nom_Producto',text='Nombre del producto')
+    producto.heading('Categoría',text='Categoría')
+    producto.heading('Marca',text='Marca')
+    producto.heading('Material',text='Material')
+    producto.heading('Color',text='Color')
+    producto.heading('Precio_De_Venta',text='Precio de venta')
+    producto.heading('Costo_De_Adquisición',text='Costo de adquisición')
+    producto.column('Id_Producto',anchor='center')
+    producto.column('Modelo',anchor='center')
+    producto.column('Nom_Producto',anchor='center')
+    producto.column('Categoría',anchor='center')
+    producto.column('Marca',anchor='center')
+    producto.column('Material',anchor='center')
+    producto.column('Color',anchor='center')
+    producto.column('Precio_De_Venta',anchor='center')
+    producto.column('Costo_De_Adquisición',anchor='center')
+    scrolledBar=ttk.Scrollbar(visualizacion,orient='horizontal',command=producto.xview)
+    scrolledBar.pack(side='bottom',fill='x',pady=5,padx=20)
+    producto.configure(yscrollcommand=scrolledBar.set)
+    task.execute("SELECT * FROM Producto")
+    datos=task.fetchall()
+    for dato in datos:
+        insercion=list(dato)
+        if dato is not None:
+            task.execute(f"SELECT Nombre_Categoria FROM Categoría WHERE Id_Categoria = {dato[3]}")
+            temp=task.fetchone()
+            insercion[3]=temp
+        producto.insert('','end',values=insercion)
+
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")
 task=conexion.cursor()
@@ -509,7 +550,7 @@ proveedores=tk.OptionMenu(cuadro2,seleccion2,"OPCION1","OPCION2","OPCION3")
 proveedores.config(bg="white",relief='flat',width=600,font=("Arial",16))
 proveedores.pack(pady=(5,0))
 #visualizacion inventario
-visualizarInventario=tk.Button(cuadro2,text="VISUALIZAR INVENTARIO")
+visualizarInventario=tk.Button(cuadro2,text="VISUALIZAR INVENTARIO",command=visualizarInv)
 visualizarInventario.config(bg="white",relief='flat',width=600,font=("Arial",16))
 visualizarInventario.pack(pady=(5,0))
 #visualizar proveedores
@@ -526,8 +567,8 @@ labelG.bind('<Button-1>',guardarEvento)
 circle=guardar.create_oval(10,10,200,110,fill='#323f4f')
 
 
-# add=tk.Button(main,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
-# add.pack()
+add=tk.Button(main,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
+add.place(x=100,y=50)
 
 # addProveedor=tk.Button(main,text="Agregar proveedor",command=addSeller)
 # addProveedor.pack(pady=40)

@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import messagebox
 import re
+from PIL import Image,ImageTk
 
 def reset(): #deja en blanco los inputs
         inputModel.delete(0,tk.END)
@@ -467,8 +468,13 @@ root.config(bg="#D9E2F3")
 head=tk.Frame(root,width=830,height=100,bg="#4472C4")
 head.pack(pady=20)
 head.propagate(False)
-titular=tk.Label(head,text="OPTILENT",font=("Times",44),bg="#4472C4")
+titular=tk.Label(head,text="OPTILENT",font=("Times",55),bg="#4472C4")
 titular.pack()
+imagen=Image.open("lentes.png")
+imagen=imagen.resize((170,170))
+photo=ImageTk.PhotoImage(imagen)
+lentes=tk.Label(head,image=photo,bg="#4472C4")
+lentes.place(x=60,y=-40)
 
 add=tk.Button(root,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
 add.pack()

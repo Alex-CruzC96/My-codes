@@ -453,6 +453,8 @@ def addSeller():
     save=tk.Button(seller,text="Guardar",font=("Arial",12),width=10,command=returnValues)
     save.place(x=260,y=280)
 
+def guardarEvento(evento):
+    messagebox.showinfo("Funciona","El evento funcionó!")
 
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")
@@ -476,10 +478,58 @@ photo=ImageTk.PhotoImage(imagen)
 lentes=tk.Label(head,image=photo,bg="#4472C4")
 lentes.place(x=60,y=-40)
 
-add=tk.Button(root,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
-add.pack()
+#Bienvenido
+welcome=tk.Label(root,text="¡Bienvenido!",font=("Arial",36),justify='center',bg="#D9E2F3")
+welcome.pack()
 
-addProveedor=tk.Button(root,text="Agregar proveedor",command=addSeller)
-addProveedor.pack(pady=40)
+#Main
+main=tk.Frame(root,width=790,height=420,bg="#FFD966")
+main.pack()
+main.propagate(False)
+#Texto de selección
+cuadro1=tk.Frame(main,width=600,height=40,bg='white',highlightbackground="black",highlightthickness=2)
+cuadro1.pack(pady=(30,0))
+cuadro1.grid_propagate(False)
+textInicio=tk.Label(cuadro1,text="SELECCIONE SU OPCION",font=("Arial",18),bg="white",justify='left')
+textInicio.grid(row=0,column=0,sticky='w')
+#contenido
+cuadro2=tk.Frame(main,width=600,height=200,bg="white",highlightbackground="black",highlightthickness=2)
+cuadro2.pack(pady=(20,0))
+cuadro2.propagate(False)
+#inventario
+seleccion=tk.StringVar()
+seleccion.set("ACTUALIZAR INVENTARIO")
+inventario=tk.OptionMenu(cuadro2,seleccion,"LENTES DE SOL","ARMAZON","LENTES DE CONTACTO","LIQUIDOS")
+inventario.config(bg="white",relief='flat',width=600,font=("Arial",16))
+inventario.pack(pady=(5,0))
+#Proveedores
+seleccion2=tk.StringVar()
+seleccion2.set("ACTUALIZAR PROVEEDORES")
+proveedores=tk.OptionMenu(cuadro2,seleccion2,"OPCION1","OPCION2","OPCION3")
+proveedores.config(bg="white",relief='flat',width=600,font=("Arial",16))
+proveedores.pack(pady=(5,0))
+#visualizacion inventario
+visualizarInventario=tk.Button(cuadro2,text="VISUALIZAR INVENTARIO")
+visualizarInventario.config(bg="white",relief='flat',width=600,font=("Arial",16))
+visualizarInventario.pack(pady=(5,0))
+#visualizar proveedores
+visualizarProveedores=tk.Button(cuadro2,text="VISUALIZAR PROVEEDORES")
+visualizarProveedores.config(bg="white",relief='flat',width=600,font=("Arial",16))
+visualizarProveedores.pack(pady=(5,0))
+#boton de guardar
+guardar=tk.Canvas(main,width=200,height=150,bg="#FFD966",highlightbackground="#FFD966")
+guardar.pack()
+guardar.propagate(False)
+labelG=tk.Label(guardar,text="GUARDAR",font=("Arial",14),justify='center',bg="#323f4f",fg="white")
+labelG.place(x=55,y=45)
+labelG.bind('<Button-1>',guardarEvento)
+circle=guardar.create_oval(10,10,200,110,fill='#323f4f')
+
+
+# add=tk.Button(main,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
+# add.pack()
+
+# addProveedor=tk.Button(main,text="Agregar proveedor",command=addSeller)
+# addProveedor.pack(pady=40)
 
 root.mainloop()

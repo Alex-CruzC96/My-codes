@@ -464,7 +464,7 @@ def visualizarInv(): #Por el momento queda así
     visualizacion.geometry("950x400")
     visualizacion.config(bg="#D9E2F3")
     visualizacion.title("Productos en inventario")
-    producto=ttk.Treeview(visualizacion,columns=('Id_Producto','Modelo','Nom_Producto','Categoría','Marca','Material','Color','Precio_De_Venta','Costo_De_Adquisición'),show='headings')
+    producto=ttk.Treeview(visualizacion,columns=('Id_Producto','Modelo','Nom_Producto','Categoría','Marca','Material','Color','Precio_De_Venta','Costo_De_Adquisición','Proveedor','Stock','Fecha_Adquisicion'),show='headings')
     producto.place(x=24,y=20,width=890,height=350)
     producto.heading('Id_Producto',text='Id_Producto')
     producto.heading('Modelo',text='Modelo')
@@ -475,6 +475,9 @@ def visualizarInv(): #Por el momento queda así
     producto.heading('Color',text='Color')
     producto.heading('Precio_De_Venta',text='Precio de venta')
     producto.heading('Costo_De_Adquisición',text='Costo de adquisición')
+    producto.heading('Proveedor',text='Proveedor')
+    producto.heading('Stock',text='Existencia de producto')
+    producto.heading('Fecha_Adquisicion',text='Fecha de aquisición')
     producto.column('Id_Producto',anchor='center')
     producto.column('Modelo',anchor='center')
     producto.column('Nom_Producto',anchor='center')
@@ -484,6 +487,9 @@ def visualizarInv(): #Por el momento queda así
     producto.column('Color',anchor='center')
     producto.column('Precio_De_Venta',anchor='center')
     producto.column('Costo_De_Adquisición',anchor='center')
+    producto.column('Proveedor',anchor='center')
+    producto.column('Stock',anchor='center')
+    producto.column('Fecha_Adquisicion',anchor='center')
     scrolledBar=ttk.Scrollbar(visualizacion,orient='horizontal',command=producto.xview)
     scrolledBar.pack(side='bottom',fill='x',pady=5,padx=20)
     producto.configure(yscrollcommand=scrolledBar.set)
@@ -492,10 +498,61 @@ def visualizarInv(): #Por el momento queda así
     for dato in datos:
         insercion=list(dato)
         if dato is not None:
-            task.execute(f"SELECT Nombre_Categoria FROM Categoría WHERE Id_Categoria = {dato[3]}")
-            temp=task.fetchone()
-            insercion[3]=temp
+            try:
+                task.execute(f"SELECT Nombre_Categoria FROM Categoría WHERE Id_Categoria = {dato[3]}")
+                temp=task.fetchone()
+                insercion[3]=temp
+                task.execute(f"SELECT Id_Proveedor FROM Inventario WHERE Id_Producto = {dato[0]}")
+                temp=task.fetchone()
+                task.execute(f"SELECT Nombre_proveedor FROM Proveedor WHERE Id_Proveedor = {temp[0]}")
+                temp=task.fetchone()
+                insercion.append(temp[0])
+                task.execute(f"SELECT Stock_Producto FROM Inventario WHERE Id_Producto = {dato[0]}")
+                temp=task.fetchone()
+                insercion.append(temp[0])
+                task.execute(f"SELECT Fecha_Adquisicion FROM Inventario WHERE Id_Producto = {dato[0]}")
+                temp=task.fetchone()
+                insercion.append(temp[0])
+            except:
+                pass
         producto.insert('','end',values=insercion)
+
+def visualizarProveedores():
+    visualizacion=tk.Toplevel(root)
+    visualizacion.geometry("950x400")
+    visualizacion.config(bg="#D9E2F3")
+    visualizacion.title("Proveedores")
+    tabla=ttk.Treeview(visualizacion,columns=('Id_Proveedor','Nombre_Proveedor','Nombre_Representante','Paterno_Representante','Materno_Representante','Direccion','Telefono','Correo','Sitio_Web'),show='headings')
+    tabla.place(x=24,y=20,width=890,height=350)
+    tabla.heading('Id_Proveedor',text='Id del proveedor')
+    tabla.heading('Nombre_Proveedor',text='Nombre de la empresa')
+    tabla.heading('Nombre_Representante',text='Nombres del representante')
+    tabla.heading('Paterno_Representante',text='Apellido paterno del representante')
+    tabla.heading('Materno_Representante',text='Apellido materno del representante')
+    tabla.heading('Direccion',text='Direccion de la empresa')
+    tabla.heading('Telefono',text='Telefono de contacto')
+    tabla.heading('Correo',text='Correo de contacto')
+    tabla.heading('Sitio_Web',text='Página de contacto')
+    tabla.column('Id_Proveedor',anchor='center')
+    tabla.column('Nombre_Proveedor',anchor='center')
+    tabla.column('Nombre_Representante',anchor='center')
+    tabla.column('Paterno_Representante',anchor='center')
+    tabla.column('Materno_Representante',anchor='center')
+    tabla.column('Direccion',anchor='center')
+    tabla.column('Telefono',anchor='center')
+    tabla.column('Correo',anchor='center')
+    tabla.column('Sitio_Web',anchor='center')
+    scrolledBar=ttk.Scrollbar(visualizacion,orient='horizontal',command=tabla.xview)
+    scrolledBar.pack(side='bottom',fill='x',pady=5,padx=20)
+    tabla.configure(yscrollcommand=scrolledBar.set)
+    try:
+        task.execute("SELECT * FROM Proveedor")
+        datos=task.fetchall()
+        for dato in datos:
+            tabla.insert('','end',values=dato)
+    except:
+        messagebox.showerror("Error en la consulta","Ha ocurrido un error inesperado")
+    
 
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")
@@ -554,7 +611,7 @@ visualizarInventario=tk.Button(cuadro2,text="VISUALIZAR INVENTARIO",command=visu
 visualizarInventario.config(bg="white",relief='flat',width=600,font=("Arial",16))
 visualizarInventario.pack(pady=(5,0))
 #visualizar proveedores
-visualizarProveedores=tk.Button(cuadro2,text="VISUALIZAR PROVEEDORES")
+visualizarProveedores=tk.Button(cuadro2,text="VISUALIZAR PROVEEDORES",command=visualizarProveedores)
 visualizarProveedores.config(bg="white",relief='flat',width=600,font=("Arial",16))
 visualizarProveedores.pack(pady=(5,0))
 #boton de guardar

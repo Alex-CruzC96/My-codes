@@ -16,6 +16,7 @@ def reset(): #deja en blanco los inputs
         inputPrecio.delete(0,tk.END)
         inputCosto.delete(0,tk.END)
         dateInput.delete(0,tk.END)
+        dateInput.insert(0,"yyyy/mm/dd")
         stockInput.delete(0,tk.END)
  
 def retornarId():
@@ -228,12 +229,17 @@ def evaluarRegistros(): #evalua las entradas de la ventana para producto
     evaluateMaterial=(re.match("^[a-zA-Z\s]+$",inputMaterial.get()) and len(inputMaterial.get())<=10)
     evaluateColor=(re.match("^[a-zA-Z\s]+$",inputColor.get()) and len(inputColor.get())<=20)
     evaluarFecha=True if ("/" in dateInput.get() or "-" in dateInput.get() and re.match(r"^([0-9]{4})(-|/)([0-9]{1,2})(-|/)([0-9]{1,2})$",dateInput.get()) is not None) else False
+    if(len(dateInput.get())==10):
+        evaluarFecha=True
+    else:
+        evaluarFecha=False
+        print("falso")
     if(evaluateModel and evaluateName and evaluateMarca and evaluateMaterial and evaluateColor and flotante and evaluarFecha):
         insertarRegistros()
     else:
         messagebox.showerror("Entradas incorrectas","Por favor, ingrese datos correctos.")
 
-def ingresarRegistro(): #genera una ventana para ingresar datos en producto
+def ingresarRegistro(event): #genera una ventana para ingresar datos en producto
     global registro
     registro=tk.Toplevel(root)
     registro.geometry("680x460")
@@ -361,7 +367,7 @@ def ingresarRegistro(): #genera una ventana para ingresar datos en producto
 
 
 #función para agregar proveedores
-def addSeller():
+def addSeller(event):
     def resetValues():
         nameInput.delete(0,tk.END)
         nombreInput.delete(0,tk.END)
@@ -616,16 +622,24 @@ visualizarProveedores.config(bg="white",relief='flat',width=600,font=("Arial",16
 visualizarProveedores.pack(pady=(5,0))
 #boton de guardar
 guardar=tk.Canvas(main,width=200,height=150,bg="#FFD966",highlightbackground="#FFD966")
-guardar.pack()
+guardar.place(x=60,y=290)
 guardar.propagate(False)
-labelG=tk.Label(guardar,text="GUARDAR",font=("Arial",14),justify='center',bg="#323f4f",fg="white")
-labelG.place(x=55,y=45)
-labelG.bind('<Button-1>',guardarEvento)
+labelG=tk.Label(guardar,text="AGREGAR REGISTRO",font=("Arial",12),justify='center',bg="#323f4f",fg="white")
+labelG.place(x=20,y=45)
+labelG.bind('<Button-1>',ingresarRegistro)
 circle=guardar.create_oval(10,10,200,110,fill='#323f4f')
 
+agregarProv=tk.Canvas(main,width=200,height=150,bg="#FFD966",highlightbackground="#FFD966")
+agregarProv.place(x=520,y=290)
+agregarProv.propagate(False)
+labelA=tk.Label(agregarProv,text="AGREGAR PROVEEDOR",font=("Arial",11),justify='center',bg="#323f4f",fg='white')
+labelA.place(x=15,y=45)
+labelA.bind('<Button-1>',addSeller)
+circle2=agregarProv.create_oval(10,10,200,110,fill='#323f4f')
 
-add=tk.Button(main,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
-add.place(x=100,y=50)
+
+# add=tk.Button(main,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
+# add.place(x=100,y=50)
 
 # addProveedor=tk.Button(main,text="Agregar proveedor",command=addSeller)
 # addProveedor.pack(pady=40)

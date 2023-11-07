@@ -570,17 +570,53 @@ def updateInv():
             produc.insert('','end',values=data)
     def seleccion(event):
         selecc=produc.selection()
-        datos=produc.item(selecc,'values')[0]
-        print(datos)
+        if selecc:
+            datos=produc.item(selecc,'values')[0]
+            task.execute(f"SELECT * FROM Producto WHERE Nom_Producto = '{datos}'")
+            temp=task.fetchone()
+            modelo.delete(0,tk.END)
+            modelo.insert(0,temp[1])
+            nombre.delete(0,tk.END)
+            nombre.insert(0,temp[2])
+            marca.delete(0,tk.END)
+            marca.insert(0,temp[4])
+            material.delete(0,tk.END)
+            material.insert(0,temp[5])
+            color.delete(0,tk.END)
+            color.insert(0,temp[6])
+            precio.delete(0,tk.END)
+            precio.insert(0,temp[7])
+            task.execute(f"SELECT Nombre_Categoria FROM Categoría WHERE Id_Categoria = {temp[3]}")
+            temp2=task.fetchone()
+            categoria.set(temp2[0])
+            task.execute(f"SELECT Stock_Producto FROM Inventario WHERE Id_Producto = {temp[0]}")
+            temp3=task.fetchone()
+            stock.delete(0,tk.END)
+            stock.insert(0,temp3[0])
+    def update():
+        selecc=produc.selection()
+        try:
+            if selecc:
+                dato=produc.item(selecc,'values')[0]
+                task.execute(f"SELECT Id_Producto FROM Producto WHERE Nom_producto = '{dato}'")
+                temp=task.fetchone()
+                task.execute(f"SELECT Id_Categoria FROM Categoría WHERE Nombre_Categoria = '{categoria.get()}'")
+                temp2=task.fetchone()
+                task.execute(f"UPDATE Producto SET Modelo = '{modelo.get()}', Nom_producto = '{nombre.get()}', Marca = '{marca.get()}', Material = '{material.get()}', Color = '{color.get()}', Precio_venta = {float(precio.get())}, Id_Categoria = {temp2[0]} WHERE Id_Producto = {temp[0]}")
+                task.execute(f"UPDATE Inventario SET Stock_Producto = {stock.get()} WHERE Id_Producto = {temp[0]}")
+                conexion.commit()
+                messagebox.showinfo("Guardado!","Los datos se han actualizado con éxito!")
+        except ValueError:
+            messagebox.showerror("Error","Ha ocurrido un error inesperado")
 
     visualizacion=tk.Toplevel(root)
     visualizacion.geometry("950x600")
     visualizacion.config(bg="#D9E2F3")
     visualizacion.title("Inventario")
     textOne=tk.Label(visualizacion,text="Elija un producto",font=("Arial",16),justify='center',bg="#D9E2F3")
-    textOne.pack(pady=(10,0))
+    textOne.pack(pady=(10,0),padx=(0,0))
     #Contenedor
-    container=tk.Frame(visualizacion,width=940,height=540,bg='lightblue')
+    container=tk.Frame(visualizacion,width=940,height=540,bg="#D9E2F3")
     container.pack()
     container.grid_propagate(False)
     #Scroll text que contiene todos los productos
@@ -602,8 +638,53 @@ def updateInv():
     entrada=tk.Entry(container,width=23,justify='left',font=("Arial",18),textvariable=busqueda)
     entrada.grid(row=0,column=0,pady=(10,0))
     #datos a cambiar
-
-
+    modelLabel=tk.Label(container,text="Modelo",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    modelLabel.grid(row=0,column=1,padx=(40,0),sticky='w')
+    modelo=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    modelo.grid(row=1,column=1,pady=(2,0),padx=(40,0))
+    nombreLabel=tk.Label(container,text="Nombre del producto",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    nombreLabel.grid(row=0,column=2,padx=(40,0),sticky='w')
+    nombre=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    nombre.grid(row=1,column=2,pady=(2,0),padx=(40,0))
+    marcaLabel=tk.Label(container,text="Marca del producto",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    marcaLabel.grid(row=2,column=1,padx=(40,0),pady=(40,0),sticky='w')
+    marca=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    marca.grid(row=3,column=1,pady=(2,0),padx=(40,0))
+    materialLabel=tk.Label(container,text="Material del producto",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    materialLabel.grid(row=2,column=2,padx=(40,0),pady=(40,0),sticky='w')
+    material=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    material.grid(row=3,column=2,pady=(2,0),padx=(40,0))
+    colorLabel=tk.Label(container,text="Color del producto",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    colorLabel.grid(row=4,column=1,padx=(40,0),pady=(40,0),sticky='w')
+    color=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    color.grid(row=5,column=1,pady=(2,0),padx=(40,0))
+    precioLabel=tk.Label(container,text="Precio del producto",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    precioLabel.grid(row=4,column=2,padx=(40,0),pady=(40,0),sticky='w')
+    precio=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    precio.grid(row=5,column=2,pady=(2,0),padx=(40,0))
+    try:
+        datos=[]
+        task.execute("SELECT Nombre_Categoria FROM Categoría")
+        temp=task.fetchall()
+        for dato in temp:
+            datos.append(dato[0])
+    except ValueError:
+        pass
+    categoria=tk.StringVar()
+    categoria.set("Seleccionar")
+    if (len(datos)!=0):
+        categoriaMenu=tk.OptionMenu(container,categoria,*datos)
+        categoriaMenu.place(x=340,y=300)
+    else:
+        categoriaMenu=tk.OptionMenu(container,categoria,"")
+        categoriaMenu.place(x=340,y=300)
+    stockLabel=tk.Label(container,text="Stock disponible",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    stockLabel.grid(row=6,column=2,padx=(40,0),pady=(40,0),sticky='w')
+    stock=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    stock.grid(row=7,column=2,pady=(2,0),padx=(40,0))
+    actualizar=tk.Button(container,text="Guardar",font=("Calibri",14),width=10,command=update)
+    actualizar.place(x=580,y=430)
+    
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")
 task=conexion.cursor()

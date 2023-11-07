@@ -685,6 +685,20 @@ def updateInv():
     actualizar=tk.Button(container,text="Guardar",font=("Calibri",14),width=10,command=update)
     actualizar.place(x=580,y=430)
     
+def updateProv():
+    visualizacion=tk.Toplevel(root)
+    visualizacion.geometry("950x600")
+    visualizacion.config(bg="#D9E2F3")
+    visualizacion.title("Proveedor")
+    proveedorLabel=tk.Label(visualizacion,text="Elige un proveedor",font=("Arial",14),justify='left',bg="#D9E2F3")
+    proveedorLabel.grid(row=0,column=0,padx=10,pady=(10,0))
+    container=tk.Frame(visualizacion,width=940,height=540,bg="#D9E2F3")
+    container.place(x=4,y=50)
+    proveedor=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    proveedor.grid(row=0,column=0)
+    #ME QUEDÉ AQUI!!!!
+
+
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")
 task=conexion.cursor()
@@ -730,7 +744,7 @@ updateInventory=tk.Button(cuadro2,text="Actualizar datos en inventario",font=("A
 updateInventory.config(bg='White',relief='flat',width=600)
 updateInventory.pack(pady=(5,0))
 #Proveedores (EN REMODELACIÓN)
-updateProveedor=tk.Button(cuadro2,text="Actualizar datos de proveedor",font=("Arial",16),justify='center')
+updateProveedor=tk.Button(cuadro2,text="Actualizar datos de proveedor",font=("Arial",16),justify='center',command=updateProv)
 updateProveedor.config(bg='White',relief='flat',width=600)
 updateProveedor.pack(pady=(5,0))
 #visualizacion inventario
@@ -757,12 +771,5 @@ labelA=tk.Label(agregarProv,text="AGREGAR PROVEEDOR",font=("Arial",11),justify='
 labelA.place(x=15,y=45)
 labelA.bind('<Button-1>',addSeller)
 circle2=agregarProv.create_oval(10,10,200,110,fill='#323f4f')
-
-
-# add=tk.Button(main,text="Agregar registro",command=ingresarRegistro) #evento principal, se modificará 
-# add.place(x=100,y=50)
-
-# addProveedor=tk.Button(main,text="Agregar proveedor",command=addSeller)
-# addProveedor.pack(pady=40)
 
 root.mainloop()

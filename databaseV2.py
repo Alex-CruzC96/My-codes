@@ -559,6 +559,50 @@ def visualizarProveedores():
     except:
         messagebox.showerror("Error en la consulta","Ha ocurrido un error inesperado")
     
+def updateInv():
+    def busquedas(*args):
+        texto=busqueda.get()
+        task.execute(f"SELECT Nom_Producto FROM Producto WHERE Nom_Producto LIKE '%{texto}%'")
+        temp=task.fetchall()
+        for i in produc.get_children():
+            produc.delete(i)
+        for data in temp:
+            produc.insert('','end',values=data)
+    def seleccion(event):
+        selecc=produc.selection()
+        datos=produc.item(selecc,'values')[0]
+        print(datos)
+
+    visualizacion=tk.Toplevel(root)
+    visualizacion.geometry("950x600")
+    visualizacion.config(bg="#D9E2F3")
+    visualizacion.title("Inventario")
+    textOne=tk.Label(visualizacion,text="Elija un producto",font=("Arial",16),justify='center',bg="#D9E2F3")
+    textOne.pack(pady=(10,0))
+    #Contenedor
+    container=tk.Frame(visualizacion,width=940,height=540,bg='lightblue')
+    container.pack()
+    container.grid_propagate(False)
+    #Scroll text que contiene todos los productos
+    produc=ttk.Treeview(container,columns=('Productos'),show='headings')
+    produc.place(x=0,y=50,width=305,height=490)
+    produc.heading('Productos',text='Productos')
+    produc.column('Productos',anchor='center')
+    produc.bind('<<TreeviewSelect>>',seleccion)
+    try:
+        task.execute("SELECT Nom_Producto FROM Producto")
+        temp=task.fetchall()
+        for data in temp:
+            produc.insert('','end',values=data)
+    except ValueError:
+        messagebox.showerror("Error","Ha ocurrido un error inesperado")
+    #Input de busqueda
+    busqueda=tk.StringVar()
+    busqueda.trace('w',busquedas)
+    entrada=tk.Entry(container,width=23,justify='left',font=("Arial",18),textvariable=busqueda)
+    entrada.grid(row=0,column=0,pady=(10,0))
+    #datos a cambiar
+
 
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")
@@ -600,18 +644,14 @@ textInicio.grid(row=0,column=0,sticky='w')
 cuadro2=tk.Frame(main,width=600,height=200,bg="white",highlightbackground="black",highlightthickness=2)
 cuadro2.pack(pady=(20,0))
 cuadro2.propagate(False)
-#inventario
-seleccion=tk.StringVar()
-seleccion.set("ACTUALIZAR INVENTARIO")
-inventario=tk.OptionMenu(cuadro2,seleccion,"LENTES DE SOL","ARMAZON","LENTES DE CONTACTO","LIQUIDOS")
-inventario.config(bg="white",relief='flat',width=600,font=("Arial",16))
-inventario.pack(pady=(5,0))
-#Proveedores
-seleccion2=tk.StringVar()
-seleccion2.set("ACTUALIZAR PROVEEDORES")
-proveedores=tk.OptionMenu(cuadro2,seleccion2,"OPCION1","OPCION2","OPCION3")
-proveedores.config(bg="white",relief='flat',width=600,font=("Arial",16))
-proveedores.pack(pady=(5,0))
+#inventario (EN REMODELACIÓN)
+updateInventory=tk.Button(cuadro2,text="Actualizar datos en inventario",font=("Arial",16),justify='center',command=updateInv)
+updateInventory.config(bg='White',relief='flat',width=600)
+updateInventory.pack(pady=(5,0))
+#Proveedores (EN REMODELACIÓN)
+updateProveedor=tk.Button(cuadro2,text="Actualizar datos de proveedor",font=("Arial",16),justify='center')
+updateProveedor.config(bg='White',relief='flat',width=600)
+updateProveedor.pack(pady=(5,0))
 #visualizacion inventario
 visualizarInventario=tk.Button(cuadro2,text="VISUALIZAR INVENTARIO",command=visualizarInv)
 visualizarInventario.config(bg="white",relief='flat',width=600,font=("Arial",16))

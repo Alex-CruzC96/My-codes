@@ -1,10 +1,14 @@
 import mysql.connector as my
 import tkinter as tk
-from tkinter import scrolledtext
 from tkinter import ttk
 from tkinter import messagebox
 import re
 from PIL import Image,ImageTk
+from tkinter import filedialog
+import shutil
+import os
+import cv2
+import time
 
 def reset(): #deja en blanco los inputs
         inputModel.delete(0,tk.END)
@@ -102,7 +106,7 @@ def definirGraduacion(): #funciona solo para los productos que poseen graduacion
             messagebox.showerror("Error","Ha ocurrido un error inesperado.")
 
     if(evaluarSiExiste()):
-        task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")
+        task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion,Foto_Producto) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())},'{new_path}')")
         conexion.commit()
         task.execute(f"INSERT INTO Inventario(Id_Producto,Id_Proveedor,Stock_Producto,Fecha_Adquisicion) VALUES('{retornarId()}','{retornarIdProveedor()}','{stockInput.get()}','{dateInput.get()}')")
         conexion.commit()
@@ -145,7 +149,7 @@ def insertarSolucion():
     if(evaluarSolucionValue()):
         if(evaluarSiExiste()):
             try:
-                task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")
+                task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion,Foto_Producto) VALUES('{inputModel.get()}','{inputName.get()}',{id_Categoria},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())},'{new_path}')")
                 conexion.commit()
                 task.execute(f"INSERT INTO Inventario(Id_Producto,Id_Proveedor,Stock_Producto,Fecha_Adquisicion) VALUES('{retornarId()}','{retornarIdProveedor()}','{stockInput.get()}','{dateInput.get()}')")
                 conexion.commit()
@@ -186,7 +190,7 @@ def insertarRegistros(): #Inserta registros sencillos
     if(extra.get()==""): #si no posee ningún dato extra en el producto
         if(evaluarSiExiste()): #Evalua que el registro no exista si existe no tiene caso volver a agregarlo
             try:#intenta hacer la inserción
-                task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion) VALUES('{inputModel.get()}','{inputName.get()}',{retornarIdCategoria()},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())})")   
+                task.execute(f"INSERT INTO Producto(Modelo,Nom_producto,Id_Categoria,Marca,Material,Color,Precio_venta,Costo_Adquisicion,Foto_Producto) VALUES('{inputModel.get()}','{inputName.get()}',{retornarIdCategoria()},'{inputMarca.get()}','{inputMaterial.get()}','{inputColor.get()}',{float(inputPrecio.get())},{float(inputCosto.get())},'{new_path}')")   
                 conexion.commit()
                 task.execute(f"INSERT INTO Inventario(Id_Producto,Id_Proveedor,Stock_Producto,Fecha_Adquisicion) VALUES('{retornarId()}','{retornarIdProveedor()}','{stockInput.get()}','{dateInput.get()}')")
                 conexion.commit()
@@ -239,7 +243,31 @@ def evaluarRegistros(): #evalua las entradas de la ventana para producto
     else:
         messagebox.showerror("Entradas incorrectas","Por favor, ingrese datos correctos.")
 
+global new_path
 def ingresarRegistro(event): #genera una ventana para ingresar datos en producto
+    def take_photo():
+        cap=cv2.VideoCapture(0)
+        while True:
+            ret, frame = cap.read()
+            cv2.imshow('Presiona la tecla "s" para tomar una foto', frame)
+            if cv2.waitKey(1) & 0xFF == ord('s'):
+                timestr=time.strftime("%Y%m%d-%H%M%S")
+                global new_path
+                new_path = f"C:\\Users\\alexc\\Desktop\\Formularios\\photo_{timestr}.jpg"
+                cv2.imwrite(new_path, frame)
+                break
+        cv2.waitKey(1)
+        cv2.destroyAllWindows()
+        cap.release()
+    def choose_photo():
+        file_path=filedialog.askopenfilename(filetypes=[("Image files","*.jpg;*.png")])
+        if file_path:
+            global new_path
+            path = f"C:\\Users\\alexc\\Desktop\\Formularios"
+            file_name = os.path.basename(file_path)
+            new_path = os.path.join(path, file_name)
+            shutil.copy(file_path, new_path)
+
     global registro
     registro=tk.Toplevel(root)
     registro.geometry("680x460")
@@ -319,11 +347,19 @@ def ingresarRegistro(event): #genera una ventana para ingresar datos en producto
     extra=tk.StringVar()
     extra.set("")
     option0=tk.Radiobutton(registro,text="Ninguno",variable=extra,value="")
-    option0.place(x=20,y=330)
+    option0.place(x=20,y=360)
     option1=tk.Radiobutton(registro,text="Posee graduación",variable=extra,value="graduacion")
-    option1.place(x=180,y=330)
+    option1.place(x=180,y=360)
     option2=tk.Radiobutton(registro,text="Posee líquido",variable=extra,value="liquido")
-    option2.place(x=360,y=330)
+    option2.place(x=360,y=360)
+
+    #Foto del producto
+    fotoLabel=tk.Label(registro,text="Fotografía del producto",font=("Calibri",14),padx=20)
+    fotoLabel.grid(row=11,column=0,sticky='w')
+    tomarFoto=tk.Button(registro,text="Tomar foto",width=10,font=("Calibri",14),command=take_photo)
+    tomarFoto.place(x=350,y=320)
+    elegirFoto=tk.Button(registro,text="Elegir foto",width=10,font=("Calibri",14),command=choose_photo)
+    elegirFoto.place(x=550,y=320)
 
     #Agregar a inventario
     opciones=[]
@@ -363,7 +399,7 @@ def ingresarRegistro(event): #genera una ventana para ingresar datos en producto
 
     #Enviar
     send=tk.Button(registro,text="Guardar",width=10,font=("Calibri",14),command=evaluarRegistros)
-    send.place(x=230,y=360)
+    send.place(x=230,y=390)
 
 
 #función para agregar proveedores
@@ -697,7 +733,7 @@ def updateProv():
     proveedor=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
     proveedor.grid(row=0,column=0)
     #ME QUEDÉ AQUI!!!!
-
+    
 
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")

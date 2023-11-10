@@ -722,18 +722,77 @@ def updateInv():
     actualizar.place(x=580,y=430)
     
 def updateProv():
+    def seleccion(event):
+        print()
+
+    def busquedas(*args):
+        texto=busqueda.get()
+        task.execute(f"SELECT Nombre_proveedor FROM Proveedor WHERE Nombre_proveedor LIKE '%{texto}%'")
+        temp=task.fetchall()
+        for i in prove.get_children():
+            prove.delete(i)
+        for data in temp:
+            prove.insert('','end',values=data)
+
     visualizacion=tk.Toplevel(root)
-    visualizacion.geometry("950x600")
+    visualizacion.geometry("990x600")
     visualizacion.config(bg="#D9E2F3")
     visualizacion.title("Proveedor")
     proveedorLabel=tk.Label(visualizacion,text="Elige un proveedor",font=("Arial",14),justify='left',bg="#D9E2F3")
     proveedorLabel.grid(row=0,column=0,padx=10,pady=(10,0))
-    container=tk.Frame(visualizacion,width=940,height=540,bg="#D9E2F3")
-    container.place(x=4,y=50)
-    proveedor=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
-    proveedor.grid(row=0,column=0)
-    #ME QUEDÉ AQUI!!!!
-    
+    container=tk.Frame(visualizacion,width=985,bg="#D9E2F3")
+    container.place(x=6,y=50,height=590)
+    prove=ttk.Treeview(container,columns=('Proveedores'),show='headings')
+    prove.grid(row=1,column=0,pady=(10,0),sticky='nsew')
+    prove.heading('Proveedores',text='Proveedores')
+    prove.column('Proveedores',anchor='center')
+    prove.bind('<<TreeviewSelect>>',seleccion)
+    try:
+        task.execute("SELECT Nombre_proveedor FROM Proveedor")
+        temp=task.fetchall()
+        for data in temp:
+            prove.insert('','end',values=data)
+    except ValueError:
+        messagebox.showerror("Error","Ha ocurrido un error inesperado")
+    busqueda=tk.StringVar()
+    busqueda.trace('w',busquedas)
+    entrada=tk.Entry(container,width=23,justify='left',font=("Arial",18),textvariable=busqueda)
+    entrada.grid(row=0,column=0,pady=(10,0))
+    #ME QUEDÉ AQUÍ!!!
+    nombreLabel=tk.Label(container,text="Nombre del proveedor",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    nombreLabel.grid(row=0,column=1,padx=(40,0),sticky='w')
+    nombre=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    nombre.grid(row=1,column=1,pady=(2,0),padx=(40,0),sticky='n')
+
+    nomRepLabel=tk.Label(container,text="Nombre del representante",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    nomRepLabel.grid(row=0,column=2,padx=(40,0),sticky='w')
+    nomRep=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    nomRep.grid(row=1,column=2,pady=(2,0),padx=(40,0),sticky='n')
+
+    paternoRepLabel=tk.Label(container,text="Apellido paterno del representante",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    paternoRepLabel.place(x=345,y=130)
+    paternoRep=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    paternoRep.place(x=345,y=170)
+
+    maternoRepLabel=tk.Label(container,text="Apellido materno de representante",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    maternoRepLabel.place(x=660,y=130)
+    maternoRep=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    maternoRep.place(x=660,y=170)
+
+    direccionLabel=tk.Label(container,text="Dirección del proveedor",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    direccionLabel.place(x=345,y=250)
+    direccion=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    direccion.place(x=345,y=290)
+
+    phoneLabel=tk.Label(container,text="Telefono",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    phoneLabel.place(x=660,y=250)
+    phone=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    phone.place(x=660,y=290)
+
+    mailLabel=tk.Label(container,text="Telefono",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    mailLabel.place(x=660,y=250)
+    mail=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    mail.place(x=660,y=290)
 
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")

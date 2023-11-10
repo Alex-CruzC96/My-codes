@@ -761,7 +761,7 @@ def updateProv():
                 dato=prove.item(selec,'values')[0]
                 task.execute(f"SELECT Id_Proveedor FROM Proveedor WHERE Nombre_proveedor = '{dato}'")
                 temp=task.fetchone()
-                task.execute(f"UPDATE Proveedor SET Nombre_proveedor = '{nombre.get()}', Nombre_representante = '{nomRep.get()}', Paterno_representante = '{paternoRep.get()}', Materno_representante = '{maternoRep.get()}', Direccion = '{direccion.get()}', Telefono = '{phone.get()}', Correo = '{mail.get()}', Sitio_web = '{web.get()}'") #VOY AQUI
+                task.execute(f"UPDATE Proveedor SET Nombre_proveedor = '{nombre.get()}', Nombre_representante = '{nomRep.get()}', Paterno_representante = '{paternoRep.get()}', Materno_representante = '{maternoRep.get()}', Direccion = '{direccion.get()}', Telefono = '{phone.get()}', Correo = '{mail.get()}', Sitio_web = '{web.get()}'") 
                 conexion.commit()
                 messagebox.showinfo("Datos actualizados","Los datos se han guardado con éxito.")
         except ValueError:
@@ -875,11 +875,11 @@ textInicio.grid(row=0,column=0,sticky='w')
 cuadro2=tk.Frame(main,width=600,height=200,bg="white",highlightbackground="black",highlightthickness=2)
 cuadro2.pack(pady=(20,0))
 cuadro2.propagate(False)
-#inventario (EN REMODELACIÓN)
+#inventario
 updateInventory=tk.Button(cuadro2,text="Actualizar datos en inventario",font=("Arial",16),justify='center',command=updateInv)
 updateInventory.config(bg='White',relief='flat',width=600)
 updateInventory.pack(pady=(5,0))
-#Proveedores (EN REMODELACIÓN)
+#Proveedores 
 updateProveedor=tk.Button(cuadro2,text="Actualizar datos de proveedor",font=("Arial",16),justify='center',command=updateProv)
 updateProveedor.config(bg='White',relief='flat',width=600)
 updateProveedor.pack(pady=(5,0))

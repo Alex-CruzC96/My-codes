@@ -723,7 +723,27 @@ def updateInv():
     
 def updateProv():
     def seleccion(event):
-        print()
+        selec=prove.selection()
+        if selec:
+            datos=prove.item(selec,'values')[0]
+            task.execute(f"SELECT * FROM Proveedor WHERE Nombre_proveedor = '{datos}'")
+            temp=task.fetchone()
+            nombre.delete(0,tk.END)
+            nombre.insert(0,temp[1])
+            nomRep.delete(0,tk.END)
+            nomRep.insert(0,temp[2])
+            paternoRep.delete(0,tk.END)
+            paternoRep.insert(0,temp[3])
+            maternoRep.delete(0,tk.END)
+            maternoRep.insert(0,temp[4])
+            direccion.delete(0,tk.END)
+            direccion.insert(0,temp[5])
+            phone.delete(0,tk.END)
+            phone.insert(0,temp[6])
+            mail.delete(0,tk.END)
+            mail.insert(0,temp[7])
+            web.delete(0,tk.END)
+            web.insert(0,temp[8])
 
     def busquedas(*args):
         texto=busqueda.get()
@@ -733,6 +753,19 @@ def updateProv():
             prove.delete(i)
         for data in temp:
             prove.insert('','end',values=data)
+
+    def update():
+        selec=prove.selection()
+        try:
+            if selec:
+                dato=prove.item(selec,'values')[0]
+                task.execute(f"SELECT Id_Proveedor FROM Proveedor WHERE Nombre_proveedor = '{dato}'")
+                temp=task.fetchone()
+                task.execute(f"UPDATE Proveedor SET Nombre_proveedor = '{nombre.get()}', Nombre_representante = '{nomRep.get()}', Paterno_representante = '{paternoRep.get()}', Materno_representante = '{maternoRep.get()}', Direccion = '{direccion.get()}', Telefono = '{phone.get()}', Correo = '{mail.get()}', Sitio_web = '{web.get()}'") #VOY AQUI
+                conexion.commit()
+                messagebox.showinfo("Datos actualizados","Los datos se han guardado con éxito.")
+        except ValueError:
+            messagebox.showerror("Error","Ha ocurrido un error inesperado")
 
     visualizacion=tk.Toplevel(root)
     visualizacion.geometry("990x600")
@@ -789,10 +822,18 @@ def updateProv():
     phone=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
     phone.place(x=660,y=290)
 
-    mailLabel=tk.Label(container,text="Telefono",font=("Calibri",14),justify='left',bg="#D9E2F3")
-    mailLabel.place(x=660,y=250)
+    mailLabel=tk.Label(container,text="Correo",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    mailLabel.place(x=345,y=360)
     mail=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
-    mail.place(x=660,y=290)
+    mail.place(x=345,y=390)
+
+    webLabel=tk.Label(container,text="Sitio web",font=("Calibri",14),justify='left',bg="#D9E2F3")
+    webLabel.place(x=660,y=360)
+    web=tk.Entry(container,width=30,font=("Calibri",13),justify='left')
+    web.place(x=660,y=390)
+
+    guardarBoton=tk.Button(container,text="Guardar",font=("Calibri",14),width=10,command=update)
+    guardarBoton.place(x=585,y=460)
 
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")

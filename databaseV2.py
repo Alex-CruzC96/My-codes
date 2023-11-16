@@ -9,6 +9,7 @@ import shutil
 import os
 import cv2
 import time
+import serial as s
 
 def reset(): #deja en blanco los inputs
         inputModel.delete(0,tk.END)
@@ -96,6 +97,7 @@ def definirGraduacion(): #funciona solo para los productos que poseen graduacion
                     task.execute(f"INSERT INTO Graduaciones(Id_Producto,Graduacion,Color_mica,Tratamiento_mica) VALUES({id_producto},'{inputGraduacion.get()}','{inputMica.get()}','{inputTratamiento.get()}')")
                     conexion.commit() #confirma la inserción a la base de datos
                     messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
+                    arduino.write(("Exito en captura").encode())
                     extra.destroy()
                     reset()
                 else:
@@ -159,6 +161,7 @@ def insertarSolucion():
             task.execute(f"INSERT INTO Soluciones_aplicables(Id_Producto,Contenido_producto,Modo_empleo,Detalles) VALUES({retornarId()},'{inputContenido.get()}','{inputEmpleo.get()}','{inputDetalles.get()}')")
             conexion.commit()
             messagebox.showinfo("Inserción exitosa","Los datos se han insertado correctamente")
+            arduino.write(("Exito en captura").encode())
         else:
             messagebox.showerror("Error","El producto ya está asociado a un registro")
     else:
@@ -195,6 +198,7 @@ def insertarRegistros(): #Inserta registros sencillos
                 task.execute(f"INSERT INTO Inventario(Id_Producto,Id_Proveedor,Stock_Producto,Fecha_Adquisicion) VALUES('{retornarId()}','{retornarIdProveedor()}','{stockInput.get()}','{dateInput.get()}')")
                 conexion.commit()
                 messagebox.showinfo("Datos guardados!","Los datos se han guardado con éxito.")
+                arduino.write(("Exito en captura").encode())
                 reset()
             except ValueError:#error de conexión o inserción por algún motivo
                     messagebox.showerror("Error","Ha ocurrido un error inesperado")#envia el mensaje de error
@@ -447,6 +451,7 @@ def addSeller(event):
             task.execute(f"INSERT INTO Proveedor(Nombre_proveedor,Nombre_representante,Paterno_representante,Materno_representante,Direccion,Telefono,Correo,Sitio_web) VALUES('{name}','{nombre}','{paterno}','{materno}','{addres}','{phone}','{mail}','{webSite}')")
             conexion.commit()
             messagebox.showinfo("Datos insertado con éxito!","Los datos han sido guardados exitosamente.")
+            arduino.write(("Exito en captura").encode())
             resetValues()
         except ValueError:
             messagebox.showerror("Error","Ha ocurrido un error inesperado.")
@@ -642,6 +647,9 @@ def updateInv():
                 task.execute(f"UPDATE Inventario SET Stock_Producto = {stock.get()} WHERE Id_Producto = {temp[0]}")
                 conexion.commit()
                 messagebox.showinfo("Guardado!","Los datos se han actualizado con éxito!")
+                arduino.write(("Datos guardados!").encode())
+                produc.delete(selecc[0])
+                produc.insert('','end',values=nombre.get())
         except ValueError:
             messagebox.showerror("Error","Ha ocurrido un error inesperado")
 
@@ -761,9 +769,12 @@ def updateProv():
                 dato=prove.item(selec,'values')[0]
                 task.execute(f"SELECT Id_Proveedor FROM Proveedor WHERE Nombre_proveedor = '{dato}'")
                 temp=task.fetchone()
-                task.execute(f"UPDATE Proveedor SET Nombre_proveedor = '{nombre.get()}', Nombre_representante = '{nomRep.get()}', Paterno_representante = '{paternoRep.get()}', Materno_representante = '{maternoRep.get()}', Direccion = '{direccion.get()}', Telefono = '{phone.get()}', Correo = '{mail.get()}', Sitio_web = '{web.get()}'") 
+                task.execute(f"UPDATE Proveedor SET Nombre_proveedor = '{nombre.get()}', Nombre_representante = '{nomRep.get()}', Paterno_representante = '{paternoRep.get()}', Materno_representante = '{maternoRep.get()}', Direccion = '{direccion.get()}', Telefono = '{phone.get()}', Correo = '{mail.get()}', Sitio_web = '{web.get()}' WHERE Nombre_proveedor = '{dato}'") 
                 conexion.commit()
                 messagebox.showinfo("Datos actualizados","Los datos se han guardado con éxito.")
+                arduino.write(("Datos guardados!").encode())
+                prove.delete(selec[0])
+                prove.insert('','end',values=nombre.get())
         except ValueError:
             messagebox.showerror("Error","Ha ocurrido un error inesperado")
 
@@ -838,6 +849,8 @@ def updateProv():
 #establece la conexion a la base de datos y se crea la variable que ejecuta los comandos SQL
 conexion=my.connect(host="localhost",user="root",passwd="10022004AlexCruz9669",database="optilent")
 task=conexion.cursor()
+
+arduino = s.Serial('COM3', 9600)
 
 #se crea la ventana principal
 root=tk.Tk()
